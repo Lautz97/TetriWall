@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TiledGrid<TGridObject>
 {
-    bool debug = true;
+    bool debug = false;
 
     /// <summary>
     /// quando viene cambiato un valore nella griglia

@@ -402,6 +402,36 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!1 &987207383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 987207384}
+  m_Layer: 0
+  m_Name: ObstacleCase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &987207384
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987207383}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 300}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1141268594}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1141268592 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2339644889127215841, guid: ab8d9eb838153eb4a9b2473498a21648,
@@ -511,21 +541,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 6
   height: 4
-  cellSize: 0.9
+  cellSize: 1
   playerObject: {fileID: 2059956409}
-  obstacleObject: {fileID: 0}
-  hollowBrick: {fileID: 8832425133164349329, guid: 765e9b93c0dba74458f54f3c9ecf04be,
+  obstacleObject: {fileID: 987207383}
+  hollowBrick: {fileID: 2007328255329837636, guid: 8c7fc6a021a4bbd4790ffc6e28578661,
     type: 3}
   blockingBrick: {fileID: 2007328255329837636, guid: 19206de7fbbea7f4f9824f4c9fb27001,
     type: 3}
   shapes:
-  - {fileID: 6914666810838182838, guid: 03e289d32475901459dcffbae151ac6a, type: 3}
+  - {fileID: 1617980017444251648, guid: 5bc2af722793817428800817b8b582c8, type: 3}
   - {fileID: 5093208852470853647, guid: 1a3a0a3eaad1a6e43912fabbbf24fae3, type: 3}
   - {fileID: 1524880852666616152, guid: e10d23837ca7afa4593e17a135e743f7, type: 3}
   - {fileID: 2363940872723064382, guid: 23b84bf15703e374ea90bf64997f87b8, type: 3}
   - {fileID: 1347450754087142695, guid: 7ad28f3a2b3c68c44a28cee040d198c9, type: 3}
   - {fileID: 9114648562714762869, guid: 7835836139d21354e8fee8f82e71ceb8, type: 3}
-  - {fileID: 1617980017444251648, guid: 5bc2af722793817428800817b8b582c8, type: 3}
 --- !u!1 &2059956409
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,6 +647,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1835195276451657933, guid: ab8d9eb838153eb4a9b2473498a21648,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2339644889127215841, guid: ab8d9eb838153eb4a9b2473498a21648,
         type: 3}
       propertyPath: m_Enabled
@@ -642,6 +676,16 @@ PrefabInstance:
         type: 3}
       propertyPath: minAreaLimit.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2339644889127215841, guid: ab8d9eb838153eb4a9b2473498a21648,
+        type: 3}
+      propertyPath: speedMultiplier
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144577470536682672, guid: ab8d9eb838153eb4a9b2473498a21648,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6856883986192248791, guid: ab8d9eb838153eb4a9b2473498a21648,
         type: 3}

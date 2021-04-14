@@ -33,16 +33,19 @@ public class GridManager : Singleton<GridManager>
     private GameObject activeShape, wallShape;
 
     // should make a stack for shapes?
-    private Queue<GameObject> queuedShapes, queuedWalls;
+    private Queue<GameObject> queuedShapes = new Queue<GameObject>(), wallQueue = new Queue<GameObject>();
 
     // Start is called before the first frame update
     private void Start()
     {
         MakePlayerGrid();
+        MakeObstacleGrid();
+        MakeNewObstacle();
         InstanciatePawn();
     }
 
 
+    //utility in case something has to be changed
     public void SetGeneric(GameObject playerContainer, bool gravity = true, int width = 6, int height = 4, float cellSize = 0.9f)
     {
         this.gravity = gravity;
@@ -52,44 +55,89 @@ public class GridManager : Singleton<GridManager>
     }
 
 
-    // for each wall must be selected a container, created in a chunk object
     // this will create the full wall --entry point of this part of the script for wall gen
-    public void SetNewObstacle(GameObject obstacleContainer)
+    public void MakeNewObstacle()
     {
-        obstacleObject = obstacleContainer;
-        InstanciateWallPlaceholder();
+        GameObject shape = shapes[Random.Range(0, shapes.Length)];
+        wallShape = InstanciateBrick(obstacleGrid, obstacleObject, shape, Vector2.zero);
+
+        // random positioning
+        int xPosition = Random.Range(-width / 2, width / 2);
+        for (int i = 0; i < Mathf.Abs(xPosition); i++)
+        {
+            MoveWallPlaceholder(Vector2.right * Mathf.Sign(xPosition));
+        }
+
+        // random rotation
+        int rotation = Random.Range(0, 3);
+        for (int i = 0; i < rotation; i++)
+        {
+            RotateWallPlaceholder();
+        }
+
+        // save positions
+        Queue<Vector2> positionQueue = new Queue<Vector2>();
+        for (int i = 0; i < 4; i++)
+        {
+            obstacleGrid.GetGridPosition(wallShape.transform.GetChild(i).transform.position + Vector3.one * 0.1f, out int x, out int y);
+            positionQueue.Enqueue(new Vector2(x, y));
+        }
+        Destroy(wallShape);
+
+        GameObject container = new GameObject("wallContainer");
+        GameObject toSpawn;
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Vector2 pos = obstacleGrid.GetWorldPosition(i, j);
+                if (positionQueue.Contains(new Vector2(i, j)))
+                {
+                    toSpawn = hollowBrick;
+                }
+                else
+                {
+                    toSpawn = blockingBrick;
+                }
+                InstanciateBrick(obstacleGrid, container, toSpawn, pos);
+            }
+        }
+        // container.SetActive(false);
+        wallQueue.Enqueue(container);
+
+
+        queuedShapes.Enqueue(shape);
     }
 
 
-
-
+    public void RemoveActiveShapeControl(Transform chunk)
+    {
+        activeShape.transform.parent = chunk;
+        activeShape = null;
+    }
 
     public void InstanciatePawn()
     {
-        activeShape = InstanciateBrick(playerGrid, playerObject, shapes[Random.Range(0, shapes.Length)], Vector2.zero);
+        activeShape = InstanciateBrick(playerGrid, playerObject, queuedShapes.Dequeue(), Vector2.zero);
+        activeShape.SetActive(true);
     }
 
-    private void InstanciateWallPlaceholder()
-    {
-        wallShape = InstanciateBrick(obstacleGrid, obstacleObject, shapes[Random.Range(0, shapes.Length)], Vector2.zero);
-    }
-
+    // instanciate game object in a grid given a position
     private GameObject InstanciateBrick(TiledGrid<TetriminoGridItem> grid, GameObject gridParent, GameObject spawnable, Vector2 position)
     {
-        grid.GetGridPosition(position, out int x, out int y);
+        grid.GetGridPosition(position + Vector2.one * 0.1f, out int x, out int y);
 
         GameObject ret = Instantiate(spawnable, grid.GetWorldPosition(x, y), Quaternion.identity);
 
         ret.name = spawnable.name;
         ret.transform.parent = gridParent.transform;
         ret.transform.localScale = Vector3.one;
+
         return ret;
     }
 
 
-
-
-
+    #region MakeGrids
     public void MakePlayerGrid()
     {
         playerGrid = new TiledGrid<TetriminoGridItem>(playerObject.transform, height, width, cellSize, playerObject.transform, (TiledGrid<TetriminoGridItem> g, int x, int y) => new TetriminoGridItem(g, x, y));
@@ -99,19 +147,36 @@ public class GridManager : Singleton<GridManager>
     {
         obstacleGrid = new TiledGrid<TetriminoGridItem>(obstacleObject.transform, height, width, cellSize, obstacleObject.transform, (TiledGrid<TetriminoGridItem> g, int x, int y) => new TetriminoGridItem(g, x, y));
     }
+    #endregion
 
 
-
-
+    #region MoveStuffAroundPublicMethods
     public void MoveActive(Vector2 where)
     {
-        MoveObject(where, activeShape);
+        if (activeShape != null)
+        {
+            MoveObject(where, activeShape);
+        }
+
     }
-    public void MoveWallPlaceholder(Vector2 where)
+    public void RotateActive()
     {
-        MoveObject(where, wallShape);
+        if (activeShape != null) { RotateObject(activeShape); }
     }
 
+
+    public void MoveWallPlaceholder(Vector2 where)
+    {
+        if (wallShape != null) { MoveObject(where, wallShape); }
+    }
+    public void RotateWallPlaceholder()
+    {
+        if (wallShape != null) { RotateObject(wallShape); }
+    }
+    #endregion
+
+
+    #region MoveStuffAroundGenerics~~
     private void MoveObject(Vector2 where, GameObject who)
     {
         Vector3 w = where * transform.localScale;
@@ -124,14 +189,6 @@ public class GridManager : Singleton<GridManager>
 
 
 
-    public void RotateActive()
-    {
-        RotateObject(activeShape);
-    }
-    public void RotateWallPlaceholder()
-    {
-        RotateObject(wallShape);
-    }
 
     private void RotateObject(GameObject who)
     {
@@ -209,8 +266,10 @@ public class GridManager : Singleton<GridManager>
         }
         return ret;
     }
+    #endregion
 
 
+    #region IDon'tWannaSeeThis
     // private void LoadToGrid(TiledGrid<TetriminoGridItem> grid)
     // {
     //     foreach (Transform child in activeShape.transform)
@@ -242,4 +301,7 @@ public class GridManager : Singleton<GridManager>
     //         }
     //     }
     // }
+    #endregion
+
+
 }
