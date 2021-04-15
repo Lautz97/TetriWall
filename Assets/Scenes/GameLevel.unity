@@ -44,7 +44,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: f0c74de0955c37f4c915d91cbec8da3e,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -224,6 +225,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Chunk
+      objectReference: {fileID: 0}
+    - target: {fileID: 8499612322962817664, guid: 7991e78c646b43a4cbe192920dc66c1f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8499612322962817665, guid: 7991e78c646b43a4cbe192920dc66c1f,
         type: 3}
@@ -647,6 +653,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1467179132447739388, guid: ab8d9eb838153eb4a9b2473498a21648,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1835195276451657933, guid: ab8d9eb838153eb4a9b2473498a21648,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -682,6 +693,16 @@ PrefabInstance:
       propertyPath: speedMultiplier
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3178779150212680881, guid: ab8d9eb838153eb4a9b2473498a21648,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3178779150212680881, guid: ab8d9eb838153eb4a9b2473498a21648,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 4144577470536682672, guid: ab8d9eb838153eb4a9b2473498a21648,
         type: 3}
       propertyPath: m_ReceiveShadows
@@ -691,6 +712,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7924329361086426065, guid: ab8d9eb838153eb4a9b2473498a21648,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8194631569264216600, guid: ab8d9eb838153eb4a9b2473498a21648,
         type: 3}

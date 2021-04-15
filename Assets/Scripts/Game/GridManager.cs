@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GridManager : Singleton<GridManager>
 {
+
+    private int numberOfPreparedWalls = 5;
+
     // this will make tetrimini slide down every time they rotate
     private bool gravity = true;
 
@@ -36,12 +39,14 @@ public class GridManager : Singleton<GridManager>
     private Queue<GameObject> queuedShapes = new Queue<GameObject>(), wallQueue = new Queue<GameObject>();
 
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         MakePlayerGrid();
         MakeObstacleGrid();
-        MakeNewObstacle();
-        InstanciatePawn();
+        for (int i = 0; i < numberOfPreparedWalls; i++)
+        {
+            EnqueueNewPair();
+        }
     }
 
 
@@ -55,36 +60,66 @@ public class GridManager : Singleton<GridManager>
     }
 
 
-    // this will create the full wall --entry point of this part of the script for wall gen
-    public void MakeNewObstacle()
+    public void ActivateWall(Transform chunk)
     {
+        GameObject c = wallQueue.Dequeue();
+        c.transform.parent = chunk;
+        c.transform.localPosition = new Vector3(c.transform.position.x, c.transform.position.y, -300);
+        c.SetActive(true);
+        EnqueueNewPair();
+    }
+
+    // this will generate a pair tetrimino + wall and put it in queues
+    private void EnqueueNewPair()
+    {
+        /**
+        *** Pick a random shape from the vector of prefabs
+        ///TODO this vector may become a pool from where to pick the active tetrimino 
+            instead of instanciating the same thing over and over again
+        **/
         GameObject shape = shapes[Random.Range(0, shapes.Length)];
         wallShape = InstanciateBrick(obstacleGrid, obstacleObject, shape, Vector2.zero);
 
-        // random positioning
-        int xPosition = Random.Range(-width / 2, width / 2);
-        for (int i = 0; i < Mathf.Abs(xPosition); i++)
-        {
-            MoveWallPlaceholder(Vector2.right * Mathf.Sign(xPosition));
-        }
-
-        // random rotation
+        /**
+        *** Pick a random number between 0 and 3
+        *** Use that number to set rotation of tetrimino at 0/90/180/270 °
+        */
         int rotation = Random.Range(0, 3);
         for (int i = 0; i < rotation; i++)
         {
             RotateWallPlaceholder();
         }
 
-        // save positions
+        /**
+        *** Pick a random number between the margins of the grid
+        *** Use that number to try to move to the choosen column
+        */
+        int xPosition = Random.Range(-width / 2, width / 2);
+        for (int i = 0; i < Mathf.Abs(xPosition); i++)
+        {
+            MoveWallPlaceholder(Vector2.right * Mathf.Sign(xPosition));
+        }
+
+        /**
+        *** save positions in a queue for faster check
+        */
         Queue<Vector2> positionQueue = new Queue<Vector2>();
         for (int i = 0; i < 4; i++)
         {
             obstacleGrid.GetGridPosition(wallShape.transform.GetChild(i).transform.position + Vector3.one * 0.1f, out int x, out int y);
             positionQueue.Enqueue(new Vector2(x, y));
         }
+        /// TODO this may be unnecessary when the tetriminos are pooled and not instanciated one at time
         Destroy(wallShape);
 
+        /**
+        *** create an empty container for the wall
+        *** set it as inactive for now
+        *** and produce a wall brick by brick 
+        *** using trigger bricks to make the hole
+        */
         GameObject container = new GameObject("wallContainer");
+        container.SetActive(false);
         GameObject toSpawn;
         for (int i = 0; i < width; i++)
         {
@@ -102,27 +137,44 @@ public class GridManager : Singleton<GridManager>
                 InstanciateBrick(obstacleGrid, container, toSpawn, pos);
             }
         }
-        // container.SetActive(false);
-        wallQueue.Enqueue(container);
 
+        //setup wall container
+        Rigidbody rb = container.AddComponent<Rigidbody>();
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+        container.AddComponent<WallBehaviour>();
+
+        /// Enqueue the wall container and the shape for the next call of game manager
+        wallQueue.Enqueue(container);
 
         queuedShapes.Enqueue(shape);
     }
 
-
+    /**
+    *** This method will attach the last active shape to the wall
+    *** so the old one will be destroyed and the active shape will be null
+    /// TODO still impling that if a pool is present the object must not be destroyed
+    */
     public void RemoveActiveShapeControl(Transform chunk)
     {
         activeShape.transform.parent = chunk;
         activeShape = null;
     }
 
-    public void InstanciatePawn()
+    /**
+    *** This method will take from the queue the next active shape
+    *** and will set it as active
+    /// TODO still impling that if a pool is present the object must not be initialized
+    */
+    public void InstanciateNextPawn()
     {
         activeShape = InstanciateBrick(playerGrid, playerObject, queuedShapes.Dequeue(), Vector2.zero);
+        activeShape.transform.localPosition = new Vector3(activeShape.transform.localPosition.x, activeShape.transform.localPosition.y, 0);
         activeShape.SetActive(true);
     }
 
+
     // instanciate game object in a grid given a position
+    /// TODO if a pool is present the object must not be initialized
     private GameObject InstanciateBrick(TiledGrid<TetriminoGridItem> grid, GameObject gridParent, GameObject spawnable, Vector2 position)
     {
         grid.GetGridPosition(position + Vector2.one * 0.1f, out int x, out int y);
@@ -136,14 +188,14 @@ public class GridManager : Singleton<GridManager>
         return ret;
     }
 
-
+    // still figuring out if this is necessary.........................
     #region MakeGrids
-    public void MakePlayerGrid()
+    private void MakePlayerGrid()
     {
         playerGrid = new TiledGrid<TetriminoGridItem>(playerObject.transform, height, width, cellSize, playerObject.transform, (TiledGrid<TetriminoGridItem> g, int x, int y) => new TetriminoGridItem(g, x, y));
     }
 
-    public void MakeObstacleGrid()
+    private void MakeObstacleGrid()
     {
         obstacleGrid = new TiledGrid<TetriminoGridItem>(obstacleObject.transform, height, width, cellSize, obstacleObject.transform, (TiledGrid<TetriminoGridItem> g, int x, int y) => new TetriminoGridItem(g, x, y));
     }
@@ -165,11 +217,11 @@ public class GridManager : Singleton<GridManager>
     }
 
 
-    public void MoveWallPlaceholder(Vector2 where)
+    private void MoveWallPlaceholder(Vector2 where)
     {
         if (wallShape != null) { MoveObject(where, wallShape); }
     }
-    public void RotateWallPlaceholder()
+    private void RotateWallPlaceholder()
     {
         if (wallShape != null) { RotateObject(wallShape); }
     }

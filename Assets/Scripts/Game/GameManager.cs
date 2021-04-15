@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : Singleton<GameManager>
@@ -12,19 +13,25 @@ public class GameManager : Singleton<GameManager>
     private Transform cluster;
     [SerializeField] private PawnBehaviour pawnBehaviour;
 
+    private int chunkDistance = 3, chunkRemaining = 999999;
+
     // Start is called before the first frame update
     void Start()
     {
         cluster = new GameObject("cluster").transform;
+
         cluster.position = Vector3.zero;
         cluster.rotation = Quaternion.identity;
         cluster.localScale = Vector3.one;
+
+        chunkRemaining = ClusterDimension - ClusterDimension / 2;
+
         for (int i = 0; i < ClusterDimension; i++)
         {
             SpawnNextTile();
         }
         /*Spawn first 20 chunks*/
-        SpawnNextPawn();
+        StartCoroutine(SpawnNextPawn());    
     }
 
     public void EndTileTriggered()
@@ -32,14 +39,32 @@ public class GameManager : Singleton<GameManager>
         SpawnNextTile();
     }
 
-    public void SpawnNextTile()
+    public void PassedWallTriggered(Transform chunk)
     {
-        NextTileSpawn = Instantiate(chunk, NextTileSpawn, Quaternion.identity, cluster).GetComponent<ChunkBehaviour>().NextSpawnPoint;
+        GridManager.Instance.RemoveActiveShapeControl(chunk);
+        StartCoroutine(SpawnNextPawn());
+    }
+    public void HitWallTriggered()
+    {
+        SceneManager.LoadScene("GameLevel", LoadSceneMode.Single);
     }
 
-    public void SpawnNextPawn()
+    public void SpawnNextTile()
     {
-        // pawnBehaviour.SetActiveShape(shapes[UnityEngine.Random.Range(0, shapes.Length)]);
+        GameObject spawnedChunk = Instantiate(chunk, NextTileSpawn, Quaternion.identity, cluster);
+        NextTileSpawn = spawnedChunk.GetComponent<ChunkBehaviour>().NextSpawnPoint;
+        if (chunkRemaining > 0) chunkRemaining--;
+        else
+        {
+            chunkRemaining = chunkDistance;
+            GridManager.Instance.ActivateWall(spawnedChunk.transform);
+        }
+    }
+
+    public IEnumerator SpawnNextPawn()
+    {
+        yield return new WaitForSeconds(0.5f);
+        GridManager.Instance.InstanciateNextPawn();
     }
 
     public void MovePawn(Vector2 where)
