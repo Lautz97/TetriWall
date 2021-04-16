@@ -89,9 +89,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5aaa0609cf18f304493f9e7dc15d455d, type: 2}
+    - target: {fileID: 6676663794499311499, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7694971400649446303, guid: 19206de7fbbea7f4f9824f4c9fb27001,
         type: 3}
       propertyPath: m_RootOrder
@@ -179,9 +194,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5aaa0609cf18f304493f9e7dc15d455d, type: 2}
+    - target: {fileID: 6676663794499311499, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7694971400649446303, guid: 19206de7fbbea7f4f9824f4c9fb27001,
         type: 3}
       propertyPath: m_RootOrder
@@ -269,9 +299,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5aaa0609cf18f304493f9e7dc15d455d, type: 2}
+    - target: {fileID: 6676663794499311499, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7694971400649446303, guid: 19206de7fbbea7f4f9824f4c9fb27001,
         type: 3}
       propertyPath: m_RootOrder
@@ -359,9 +404,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5aaa0609cf18f304493f9e7dc15d455d, type: 2}
+    - target: {fileID: 6676663794499311499, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7694971400649446303, guid: 19206de7fbbea7f4f9824f4c9fb27001,
         type: 3}
       propertyPath: m_RootOrder

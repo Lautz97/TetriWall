@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class SwipeInteraction : MonoBehaviour
 {
-    // public GridManager gridManager;
-
     [SerializeField] private float minDist = .2f, maxtime = 1f;
 
     [SerializeField, Range(0f, 1f)] private float dirThreshold = .9f;
@@ -33,7 +31,6 @@ public class SwipeInteraction : MonoBehaviour
             if (Vector3.Distance(startPosition, endPosition) >= minDist)
             {
                 Vector3 dir = endPosition - startPosition;
-                // Vector2 dir2D = new Vector2(dir.x, dir.y).normalized;
                 SwipeDirection(dir);
             }
             else
@@ -52,29 +49,24 @@ public class SwipeInteraction : MonoBehaviour
         if (dir == Vector2.zero)
         {
             GameManager.Instance.RotatePawn();
-            // gridManager.RotateActive();
         }
         else
         {
             if (Vector2.Dot(Vector2.left, dir) > dirThreshold)
             {
                 GameManager.Instance.MovePawn(Vector2.left);
-                // gridManager.MoveActive(Vector2.left);
             }
             else if (Vector2.Dot(Vector2.right, dir) > dirThreshold)
             {
                 GameManager.Instance.MovePawn(Vector2.right);
-                // gridManager.MoveActive(Vector2.right);
             }
             else if (Vector2.Dot(Vector2.up, dir) > dirThreshold)
             {
-                GameManager.Instance.MovePawn(Vector2.up);
-                // gridManager.MoveActive(Vector2.up);
+                // GameManager.Instance.MovePawn(Vector2.up);
             }
             else if (Vector2.Dot(Vector2.down, dir) > dirThreshold)
             {
-                GameManager.Instance.MovePawn(Vector2.down);
-                // gridManager.MoveActive(Vector2.down);
+                // GameManager.Instance.MovePawn(Vector2.down);
             }
         }
     }

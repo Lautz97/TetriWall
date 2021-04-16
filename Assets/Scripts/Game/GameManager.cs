@@ -31,7 +31,7 @@ public class GameManager : Singleton<GameManager>
             SpawnNextTile();
         }
         /*Spawn first 20 chunks*/
-        StartCoroutine(SpawnNextPawn());    
+        StartCoroutine(SpawnNextPawn());
     }
 
     public void EndTileTriggered()
@@ -42,6 +42,7 @@ public class GameManager : Singleton<GameManager>
     public void PassedWallTriggered(Transform chunk)
     {
         GridManager.Instance.RemoveActiveShapeControl(chunk);
+        ProgressionManager.Instance.WallPassed();
         StartCoroutine(SpawnNextPawn());
     }
     public void HitWallTriggered()

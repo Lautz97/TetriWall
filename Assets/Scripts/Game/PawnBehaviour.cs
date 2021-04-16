@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PawnBehaviour : MonoBehaviour
+public class PawnBehaviour : Singleton<PawnBehaviour>
 {
     [SerializeField] private Material BGMaterial;
     [SerializeField] private float parallaxFactor = 1;
-    [SerializeField] private float speed = 1;
-    [SerializeField] private float speedMultiplier = 1;
+    public float speed = 1;
+    public float speedMultiplier = 1;
 
     // Start is called before the first frame update
     void Awake()

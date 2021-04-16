@@ -89,6 +89,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 40bb0155e83891544b530b811e482dd1, type: 2}
@@ -176,6 +186,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Brick (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
         type: 3}
@@ -269,6 +289,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 40bb0155e83891544b530b811e482dd1, type: 2}
@@ -356,6 +386,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Brick
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5816506684273693586, guid: 19206de7fbbea7f4f9824f4c9fb27001,
         type: 3}
