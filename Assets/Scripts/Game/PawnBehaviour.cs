@@ -21,9 +21,4 @@ public class PawnBehaviour : Singleton<PawnBehaviour>
         BGMaterial.mainTextureOffset += (Vector2.up * speed * speedMultiplier * Time.deltaTime) / parallaxFactor;
         transform.position += (Vector3.forward * Time.deltaTime * speed * speedMultiplier);
     }
-
-    public void SetActiveShape(GameObject shape)
-    {
-
-    }
 }

@@ -154,9 +154,8 @@ public class GridManager : Singleton<GridManager>
     *** so the old one will be destroyed and the active shape will be null
     /// TODO still impling that if a pool is present the object must not be destroyed
     */
-    public void RemoveActiveShapeControl(Transform chunk)
+    public void RemoveActiveShapeControl()
     {
-        activeShape.transform.parent = chunk;
         activeShape = null;
     }
 
@@ -320,40 +319,15 @@ public class GridManager : Singleton<GridManager>
     }
     #endregion
 
+    private void OnEnable()
+    {
+        WallBehaviour.PassedCorrectly += RemoveActiveShapeControl;
+        WallBehaviour.PassedWrongly += RemoveActiveShapeControl;
+    }
 
-    #region IDon'tWannaSeeThis
-    // private void LoadToGrid(TiledGrid<TetriminoGridItem> grid)
-    // {
-    //     foreach (Transform child in activeShape.transform)
-    //     {
-    //         pg.GetGridPosition(child.position, out int x, out int y);
-    //         if (x < 0 || x > w - 1 || y < 0 || y > h - 1)
-    //         {
-
-    //         }
-    //         else
-    //         {
-    //             grid.GetGridItem(child.transform.position).SetValue(child.gameObject);
-    //         }
-    //     }
-    // }
-
-    // private void UnloadFromGrid(TiledGrid<TetriminoGridItem> grid)
-    // {
-    //     foreach (Transform child in activeShape.transform)
-    //     {
-    //         pg.GetGridPosition(child.position, out int x, out int y);
-    //         if (x < 0 || x > w - 1 || y < 0 || y > h - 1)
-    //         {
-
-    //         }
-    //         else
-    //         {
-    //             grid.GetGridItem(child.transform.position).SetValue(null);
-    //         }
-    //     }
-    // }
-    #endregion
-
-
+    private void OnDisable()
+    {
+        WallBehaviour.PassedCorrectly -= RemoveActiveShapeControl;
+        WallBehaviour.PassedWrongly -= RemoveActiveShapeControl;
+    }
 }

@@ -9,17 +9,19 @@ public class ProgressionManager : Singleton<ProgressionManager>
 
     [SerializeField] private float startingSpeed = 15, deltaSpeed = 0.1f, startingSpeedMultiplier = 1;
 
+    public static System.Action<int> PointsUpdated;
+
     private void Start()
     {
         PawnBehaviour.Instance.speed = startingSpeed;
         PawnBehaviour.Instance.speedMultiplier = startingSpeedMultiplier;
-        UIManager.Instance.UpdatePoints(currentPoints);
+        PointsUpdated?.Invoke(currentPoints);
     }
 
     public void WallPassed()
     {
         currentPoints += wallPoints * pointsMultiplier;
-        UIManager.Instance.UpdatePoints(currentPoints);
+        PointsUpdated?.Invoke(currentPoints);
         PawnBehaviour.Instance.speed += deltaSpeed;
     }
 

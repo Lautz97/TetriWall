@@ -3,12 +3,17 @@ using UnityEngine;
 
 public class SwipeInteraction : MonoBehaviour
 {
+    // fix bugs (?)
+    // ad a preference tool
     [SerializeField] private float minDist = .2f, maxtime = 1f;
 
     [SerializeField, Range(0f, 1f)] private float dirThreshold = .9f;
 
     private Vector2 startPosition, endPosition;
     private float startTime, endTime;
+
+    public static System.Action<Vector2> SwipeDetected;
+    public static System.Action TapDetected;
 
     public void SwipeStart(Vector2 position, float time)
     {
@@ -48,25 +53,25 @@ public class SwipeInteraction : MonoBehaviour
     {
         if (dir == Vector2.zero)
         {
-            GameManager.Instance.RotatePawn();
+            TapDetected?.Invoke();
         }
         else
         {
             if (Vector2.Dot(Vector2.left, dir) > dirThreshold)
             {
-                GameManager.Instance.MovePawn(Vector2.left);
+                SwipeDetected?.Invoke(Vector2.left);
             }
             else if (Vector2.Dot(Vector2.right, dir) > dirThreshold)
             {
-                GameManager.Instance.MovePawn(Vector2.right);
+                SwipeDetected?.Invoke(Vector2.right);
             }
             else if (Vector2.Dot(Vector2.up, dir) > dirThreshold)
             {
-                // GameManager.Instance.MovePawn(Vector2.up);
+                // SwipeDetected?.Invoke(Vector2.up);
             }
             else if (Vector2.Dot(Vector2.down, dir) > dirThreshold)
             {
-                // GameManager.Instance.MovePawn(Vector2.down);
+                // SwipeDetected?.Invoke(Vector2.down);
             }
         }
     }

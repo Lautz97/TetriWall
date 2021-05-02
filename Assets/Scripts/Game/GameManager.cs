@@ -15,6 +15,23 @@ public class GameManager : Singleton<GameManager>
 
     private int chunkDistance = 3, chunkRemaining = 999999;
 
+    private void OnEnable()
+    {
+        ChunkBehaviour.EndTileTriggered += SpawnNextTile;
+        WallBehaviour.PassedCorrectly += PassedWallTriggered;
+        WallBehaviour.PassedWrongly += HitWallTriggered;
+        SwipeInteraction.TapDetected += RotatePawn;
+        SwipeInteraction.SwipeDetected += MovePawn;
+    }
+    private void OnDisable()
+    {
+        ChunkBehaviour.EndTileTriggered -= SpawnNextTile;
+        WallBehaviour.PassedCorrectly -= PassedWallTriggered;
+        WallBehaviour.PassedWrongly -= HitWallTriggered;
+        SwipeInteraction.TapDetected -= RotatePawn;
+        SwipeInteraction.SwipeDetected -= MovePawn;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,14 +51,8 @@ public class GameManager : Singleton<GameManager>
         StartCoroutine(SpawnNextPawn());
     }
 
-    public void EndTileTriggered()
+    public void PassedWallTriggered()
     {
-        SpawnNextTile();
-    }
-
-    public void PassedWallTriggered(Transform chunk)
-    {
-        GridManager.Instance.RemoveActiveShapeControl(chunk);
         ProgressionManager.Instance.WallPassed();
         StartCoroutine(SpawnNextPawn());
     }
