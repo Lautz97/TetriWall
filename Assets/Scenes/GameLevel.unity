@@ -579,12 +579,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1465171367}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee5c4c973df5d004ebbb797c44d3b5c9, type: 3}
+  m_Script: {fileID: 11500000, guid: e6ded3ff8b080db4b8ec4a7684be4947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDist: 0.2
-  maxtime: 1
-  dirThreshold: 0.9
 --- !u!114 &1465171369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,10 +591,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1465171367}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 296311eea76203e4b960a27c1431a498, type: 3}
+  m_Script: {fileID: 11500000, guid: a03cab419a9789949ba34d759d4081c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swipe: {fileID: 1465171368}
+  minSwipeDistance: 20
+  maxTimeSwipe: 2
 --- !u!4 &1465171370
 Transform:
   m_ObjectHideFlags: 0

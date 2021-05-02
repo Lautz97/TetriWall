@@ -20,16 +20,15 @@ public class GameManager : Singleton<GameManager>
         ChunkBehaviour.EndTileTriggered += SpawnNextTile;
         WallBehaviour.PassedCorrectly += PassedWallTriggered;
         WallBehaviour.PassedWrongly += HitWallTriggered;
-        SwipeInteraction.TapDetected += RotatePawn;
-        SwipeInteraction.SwipeDetected += MovePawn;
+        SwipeDetector.OnSwipe += SwipeDetected;
     }
     private void OnDisable()
     {
         ChunkBehaviour.EndTileTriggered -= SpawnNextTile;
         WallBehaviour.PassedCorrectly -= PassedWallTriggered;
         WallBehaviour.PassedWrongly -= HitWallTriggered;
-        SwipeInteraction.TapDetected -= RotatePawn;
-        SwipeInteraction.SwipeDetected -= MovePawn;
+        SwipeDetector.OnSwipe -= SwipeDetected;
+
     }
 
     // Start is called before the first frame update
@@ -79,11 +78,23 @@ public class GameManager : Singleton<GameManager>
         GridManager.Instance.InstanciateNextPawn();
     }
 
-    public void MovePawn(Vector2 where)
+    void SwipeDetected(SwipeData sw)
+    {
+        if (sw.Direction == Vector2.zero)
+        {
+            RotatePawn();
+        }
+        else
+        {
+            MovePawn(sw.Direction);
+        }
+    }
+
+    private void MovePawn(Vector2 where)
     {
         GridManager.Instance.MoveActive(where);
     }
-    public void RotatePawn()
+    private void RotatePawn()
     {
         GridManager.Instance.RotateActive();
     }
