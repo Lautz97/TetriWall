@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
 public class GameManager : Singleton<GameManager>
@@ -33,7 +32,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         cluster = new GameObject("cluster").transform;
 
@@ -55,8 +54,11 @@ public class GameManager : Singleton<GameManager>
 
     private void StartSession()
     {
-        chunkRemaining = 0;
-        NextPawn();
+        if (!StateManager.isInitialized)
+        {
+            chunkRemaining = 0;
+            NextPawn();
+        }
     }
 
     private void NextPawn()
@@ -64,16 +66,16 @@ public class GameManager : Singleton<GameManager>
         StartCoroutine(SpawnNextPawn());
     }
 
-    public void PassedWallTriggered()
+    private void PassedWallTriggered()
     {
         NextPawn();
     }
-    public void HitWallTriggered()
+    private void HitWallTriggered()
     {
-        SceneManager.LoadScene("GameLevel", LoadSceneMode.Single);
+        StateManager.UpdateState(GameState.gameOver);
     }
 
-    public void SpawnNextTile()
+    private void SpawnNextTile()
     {
         GameObject spawnedChunk = Instantiate(chunk, NextTileSpawn, Quaternion.identity, cluster);
         NextTileSpawn = spawnedChunk.GetComponent<ChunkBehaviour>().NextSpawnPoint;
@@ -85,13 +87,13 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public IEnumerator SpawnNextPawn()
+    private IEnumerator SpawnNextPawn()
     {
         yield return new WaitForSeconds(0.5f);
         GridManager.Instance.InstanciateNextPawn();
     }
 
-    void SwipeDetected(SwipeData sw)
+    private void SwipeDetected(SwipeData sw)
     {
         if (sw.Direction == Vector2.zero)
         {

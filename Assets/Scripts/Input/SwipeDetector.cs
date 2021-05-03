@@ -43,6 +43,11 @@ public class SwipeDetector : MonoBehaviour
         }
         if (testInput)
         {
+
+
+            if (Input.GetKeyDown(KeyCode.Escape)) StateManager.UpdateState(StateManager.GetGameState == GameState.paused ? GameState.playing : GameState.paused);
+
+
             if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
             {
                 SetPositionAndTime(Vector2.left * minSwipeDistance, out downPosition, out downTime);

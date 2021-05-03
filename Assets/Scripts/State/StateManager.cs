@@ -4,6 +4,7 @@ using UnityEngine;
 public static class StateManager
 {
     public static GameState GetGameState { private set; get; }
+    public static bool isInitialized = false;
 
     public static Action OnMainMenu, OnPlay, OnPause, OnGameOver;
 
@@ -14,12 +15,14 @@ public static class StateManager
         {
             case GameState.mainMenu:
                 Time.timeScale = 0;
+                isInitialized = false;
                 OnMainMenu?.Invoke();
                 break;
 
             case GameState.playing:
                 Time.timeScale = 1;
                 OnPlay?.Invoke();
+                isInitialized = true;
                 break;
 
             case GameState.paused:

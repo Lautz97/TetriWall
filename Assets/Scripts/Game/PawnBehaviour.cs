@@ -31,6 +31,7 @@ public class PawnBehaviour : Singleton<PawnBehaviour>
 
     void AddBooster()
     {
-        gameObject.AddComponent<InitialPawnBooster>();
+        if (!StateManager.isInitialized)
+            gameObject.AddComponent<InitialPawnBooster>();
     }
 }

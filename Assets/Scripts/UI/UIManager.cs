@@ -10,7 +10,7 @@ public class UIManager : Singleton<UIManager>
         StateManager.OnPause += AcivatePause;
         StateManager.OnPlay += ActivateGameLoop;
 
-        StateManager.OnMainMenu?.Invoke();
+        StateManager.UpdateState(GameState.mainMenu);
     }
     private void OnDisable()
     {

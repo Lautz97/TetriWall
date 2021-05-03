@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ProgressionManager : Singleton<ProgressionManager>
 {
@@ -27,12 +28,15 @@ public class ProgressionManager : Singleton<ProgressionManager>
 
     private void Initialize()
     {
-        PawnBehaviour.Instance.speed = startingSpeed;
-        PawnBehaviour.Instance.speedMultiplier = startingSpeedMultiplier;
+        if (!StateManager.isInitialized)
+        {
+            PawnBehaviour.Instance.speed = startingSpeed;
+            PawnBehaviour.Instance.speedMultiplier = startingSpeedMultiplier;
 
-        ResetScoring();
+            ResetScoring();
 
-        PointsUpdated?.Invoke();
+            PointsUpdated?.Invoke();
+        }
     }
 
     private void ResetScoring()
@@ -66,10 +70,17 @@ public class ProgressionManager : Singleton<ProgressionManager>
 
     private void GameOver()
     {
-        SaveScoring();
-        ResetScoring();
+        if (StateManager.isInitialized)
+        {
+            if (StateManager.GetGameState == GameState.gameOver)
+            {
+                SaveScoring();
+                ResetScoring();
 
-        PointsUpdated?.Invoke();
+                PointsUpdated?.Invoke();
+            }
+            SceneManager.LoadScene("GameLevel", LoadSceneMode.Single);
+        }
     }
 
     private void SaveScoring()

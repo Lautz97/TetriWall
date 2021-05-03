@@ -20,6 +20,10 @@ public class GameLoopHUD : MonoBehaviour
     {
         currentScoreText.text = "Points: " + SaveLoad.LoadCurrentScore();
         hiScoreText.text = "Best: " + SaveLoad.LoadHiScore();
+    }
 
+    public void Pause()
+    {
+        StateManager.UpdateState(GameState.paused);
     }
 }
