@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
 {
-    [SerializeField] private TMP_Text text;
+    [SerializeField] private TMP_Text currentScoreText, hiScoreText;
     [SerializeField] private GameObject menuPanel, pausePanel, loadingPanel, gameloopPanel, gameoverPanel;
 
     private void Start()
@@ -22,8 +22,9 @@ public class UIManager : Singleton<UIManager>
 
     private void UpdatePoints()
     {
-        int points = SaveLoad.LoadCurrentScore();
-        text.text = "Points: " + points;
+        currentScoreText.text = "Points: " + SaveLoad.LoadCurrentScore();
+        hiScoreText.text = "Best: " + SaveLoad.LoadHiScore();
+
     }
 
     private void DisableAllPanels()

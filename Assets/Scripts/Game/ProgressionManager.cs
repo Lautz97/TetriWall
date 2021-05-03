@@ -31,6 +31,12 @@ public class ProgressionManager : Singleton<ProgressionManager>
         PointsUpdated?.Invoke();
     }
 
+    private void ResetScoring()
+    {
+        currentPoints = 0;
+        SaveScoring();
+    }
+
     private void WallPassed()
     {
         PawnBehaviour.Instance.speed += deltaSpeed;
@@ -56,14 +62,9 @@ public class ProgressionManager : Singleton<ProgressionManager>
 
     }
 
-    private void ResetScoring()
-    {
-        currentPoints = 0;
-        SaveScoring();
-    }
-
     private void SaveScoring()
     {
         SaveLoad.SaveCurrentScore(currentPoints);
+        SaveLoad.SaveHiScore(currentPoints);
     }
 }
