@@ -21,6 +21,8 @@ public class GameManager : Singleton<GameManager>
         WallBehaviour.PassedCorrectly += PassedWallTriggered;
         WallBehaviour.PassedWrongly += HitWallTriggered;
         SwipeDetector.OnSwipe += SwipeDetected;
+
+        StateManager.OnPlay += StartSession;
     }
     private void OnDisable()
     {
@@ -29,6 +31,7 @@ public class GameManager : Singleton<GameManager>
         WallBehaviour.PassedWrongly -= HitWallTriggered;
         SwipeDetector.OnSwipe -= SwipeDetected;
 
+        StateManager.OnPlay -= StartSession;
     }
 
     // Start is called before the first frame update
@@ -50,7 +53,6 @@ public class GameManager : Singleton<GameManager>
         {
             SpawnNextTile();
         }
-        StartSession();
     }
 
     private void StartSession()

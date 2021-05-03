@@ -5,14 +5,11 @@ public class GameLoopHUD : MonoBehaviour
 {
     [SerializeField] private TMP_Text currentScoreText, hiScoreText;
 
-    private void Start()
-    {
-        UpdatePoints();
-    }
-
     private void OnEnable()
     {
         ProgressionManager.PointsUpdated += UpdatePoints;
+
+        UpdatePoints();
     }
     private void OnDisable()
     {

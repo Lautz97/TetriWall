@@ -10,12 +10,6 @@ public class ChunkBehaviour : MonoBehaviour
     private bool alive = true;
     [SerializeField] private float remainingTime;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player") && alive)

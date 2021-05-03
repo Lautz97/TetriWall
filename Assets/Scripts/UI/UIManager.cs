@@ -3,6 +3,21 @@
 public class UIManager : Singleton<UIManager>
 {
     [SerializeField] private GameObject menuPanel, pausePanel, loadingPanel, gameloopPanel, gameoverPanel;
+    private void OnEnable()
+    {
+        StateManager.OnGameOver += ActivateGameOver;
+        StateManager.OnMainMenu += ActivateMainMenu;
+        StateManager.OnPause += AcivatePause;
+        StateManager.OnPlay += ActivateGameLoop;
+        ActivateMainMenu();
+    }
+    private void OnDisable()
+    {
+        StateManager.OnGameOver -= ActivateGameOver;
+        StateManager.OnMainMenu -= ActivateMainMenu;
+        StateManager.OnPause -= AcivatePause;
+        StateManager.OnPlay -= ActivateGameLoop;
+    }
 
     private void DisableAllPanels()
     {
@@ -11,7 +26,6 @@ public class UIManager : Singleton<UIManager>
             item.gameObject.SetActive(false);
         }
     }
-
     private void ActivateMainMenu()
     {
         DisableAllPanels();

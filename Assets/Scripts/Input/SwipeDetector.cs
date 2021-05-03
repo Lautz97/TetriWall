@@ -101,13 +101,16 @@ public class SwipeDetector : MonoBehaviour
 
     private void SendSwipe(Vector2 dir)
     {
-        SwipeData swipe = new SwipeData()
+        if (StateManager.GetGameState == GameState.playing)
         {
-            Direction = dir,
-            StartPosition = downPosition,
-            EndPosition = upPosition
-        };
-        OnSwipe?.Invoke(swipe);
+            SwipeData swipe = new SwipeData()
+            {
+                Direction = dir,
+                StartPosition = downPosition,
+                EndPosition = upPosition
+            };
+            OnSwipe?.Invoke(swipe);
+        }
     }
 
     private bool maxTimeExceeded() => (downTime - upTime) > maxTimeSwipe;

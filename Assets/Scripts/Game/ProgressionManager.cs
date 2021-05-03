@@ -13,15 +13,21 @@ public class ProgressionManager : Singleton<ProgressionManager>
     private void OnEnable()
     {
         WallBehaviour.PassedCorrectly += WallPassed;
+
+        StateManager.OnPlay += Initialize;
+        StateManager.OnGameOver += GameOver;
     }
 
     private void OnDisable()
     {
         WallBehaviour.PassedCorrectly -= WallPassed;
+
+        StateManager.OnPlay -= Initialize;
+        StateManager.OnGameOver -= GameOver;
     }
 
 
-    private void Start()
+    private void Initialize()
     {
         PawnBehaviour.Instance.speed = startingSpeed;
         PawnBehaviour.Instance.speedMultiplier = startingSpeedMultiplier;
@@ -39,11 +45,14 @@ public class ProgressionManager : Singleton<ProgressionManager>
 
     private void WallPassed()
     {
-        PawnBehaviour.Instance.speed += deltaSpeed;
+        if (StateManager.GetGameState == GameState.playing)
+        {
+            PawnBehaviour.Instance.speed += deltaSpeed;
 
-        AddPoints();
+            AddPoints();
 
-        PointsUpdated?.Invoke();
+            PointsUpdated?.Invoke();
+        }
     }
 
     private void AddPoints()
@@ -59,7 +68,10 @@ public class ProgressionManager : Singleton<ProgressionManager>
 
     private void GameOver()
     {
+        SaveScoring();
+        ResetScoring();
 
+        PointsUpdated?.Invoke();
     }
 
     private void SaveScoring()
