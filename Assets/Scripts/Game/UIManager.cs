@@ -5,6 +5,11 @@ public class UIManager : Singleton<UIManager>
 {
     [SerializeField] private TMP_Text text;
 
+    private void Start()
+    {
+        UpdatePoints();
+    }
+
     private void OnEnable()
     {
         ProgressionManager.PointsUpdated += UpdatePoints;
@@ -14,8 +19,9 @@ public class UIManager : Singleton<UIManager>
         ProgressionManager.PointsUpdated -= UpdatePoints;
     }
 
-    public void UpdatePoints(int points)
+    private void UpdatePoints()
     {
+        int points = SaveLoad.LoadCurrentScore();
         text.text = "Points: " + points;
     }
 

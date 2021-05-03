@@ -60,6 +60,7 @@ public class GridManager : Singleton<GridManager>
     }
 
 
+    //TODO this is non changing with the cellsize
     public void ActivateWall(Transform chunk)
     {
         GameObject c = wallQueue.Dequeue();

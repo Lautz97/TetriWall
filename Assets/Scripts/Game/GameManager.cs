@@ -40,20 +40,33 @@ public class GameManager : Singleton<GameManager>
         cluster.rotation = Quaternion.identity;
         cluster.localScale = Vector3.one;
 
-        chunkRemaining = ClusterDimension - ClusterDimension / 2;
+        /*Spawn first 20 chunks*/
+        InitStartingCluster();
+    }
 
+    private void InitStartingCluster()
+    {
         for (int i = 0; i < ClusterDimension; i++)
         {
             SpawnNextTile();
         }
-        /*Spawn first 20 chunks*/
+        StartSession();
+    }
+
+    private void StartSession()
+    {
+        chunkRemaining = 0;
+        NextPawn();
+    }
+
+    private void NextPawn()
+    {
         StartCoroutine(SpawnNextPawn());
     }
 
     public void PassedWallTriggered()
     {
-        ProgressionManager.Instance.WallPassed();
-        StartCoroutine(SpawnNextPawn());
+        NextPawn();
     }
     public void HitWallTriggered()
     {

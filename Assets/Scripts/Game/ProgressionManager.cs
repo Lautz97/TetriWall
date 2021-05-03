@@ -4,34 +4,66 @@ using UnityEngine;
 
 public class ProgressionManager : Singleton<ProgressionManager>
 {
+    public static System.Action PointsUpdated;
 
     [SerializeField] private int currentPoints = 0, wallPoints = 1, pointsMultiplier = 1;
 
     [SerializeField] private float startingSpeed = 15, deltaSpeed = 0.1f, startingSpeedMultiplier = 1;
 
-    public static System.Action<int> PointsUpdated;
+    private void OnEnable()
+    {
+        WallBehaviour.PassedCorrectly += WallPassed;
+    }
+
+    private void OnDisable()
+    {
+        WallBehaviour.PassedCorrectly -= WallPassed;
+    }
+
 
     private void Start()
     {
         PawnBehaviour.Instance.speed = startingSpeed;
         PawnBehaviour.Instance.speedMultiplier = startingSpeedMultiplier;
-        PointsUpdated?.Invoke(currentPoints);
+
+        ResetScoring();
+
+        PointsUpdated?.Invoke();
     }
 
-    public void WallPassed()
+    private void WallPassed()
+    {
+        PawnBehaviour.Instance.speed += deltaSpeed;
+
+        AddPoints();
+
+        PointsUpdated?.Invoke();
+    }
+
+    private void AddPoints()
     {
         currentPoints += wallPoints * pointsMultiplier;
-        PointsUpdated?.Invoke(currentPoints);
-        PawnBehaviour.Instance.speed += deltaSpeed;
+        SaveScoring();
     }
 
-    public void SetMultiplier()
+    private void SetMultiplier()
     {
 
     }
 
-    public void GameOver()
+    private void GameOver()
     {
 
+    }
+
+    private void ResetScoring()
+    {
+        currentPoints = 0;
+        SaveScoring();
+    }
+
+    private void SaveScoring()
+    {
+        SaveLoad.SaveCurrentScore(currentPoints);
     }
 }

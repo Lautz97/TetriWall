@@ -11,4 +11,6 @@ public class Utils : MonoBehaviour
 
     [SerializeField] public enum Shape { zero, Q, L, J, I, Z, S, T }
 
+    public static string currentScoreKey = "currentScore";
+
 }

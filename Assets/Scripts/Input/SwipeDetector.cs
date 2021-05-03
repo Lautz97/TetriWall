@@ -45,26 +45,26 @@ public class SwipeDetector : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
             {
-                SetPositionAndTime(Vector2.zero, out downPosition, out downTime);
-                SetPositionAndTime(Vector2.left, out upPosition, out upTime);
+                SetPositionAndTime(Vector2.left * minSwipeDistance, out downPosition, out downTime);
+                SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                 DetectSwipe();
             }
             if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
             {
-                SetPositionAndTime(Vector2.zero, out downPosition, out downTime);
-                SetPositionAndTime(Vector2.right, out upPosition, out upTime);
+                SetPositionAndTime(Vector2.right * minSwipeDistance, out downPosition, out downTime);
+                SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                 DetectSwipe();
             }
             if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
             {
-                SetPositionAndTime(Vector2.zero, out downPosition, out downTime);
-                SetPositionAndTime(Vector2.up, out upPosition, out upTime);
+                SetPositionAndTime(Vector2.up * minSwipeDistance, out downPosition, out downTime);
+                SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                 DetectSwipe();
             }
             if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
             {
-                SetPositionAndTime(Vector2.zero, out downPosition, out downTime);
-                SetPositionAndTime(Vector2.down, out upPosition, out upTime);
+                SetPositionAndTime(Vector2.down * minSwipeDistance, out downPosition, out downTime);
+                SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                 DetectSwipe();
             }
             if (Input.GetKeyDown(KeyCode.Space))
