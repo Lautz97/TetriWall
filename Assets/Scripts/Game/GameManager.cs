@@ -13,26 +13,39 @@ public class GameManager : Singleton<GameManager>
     private Transform cluster;
     [SerializeField] private PawnBehaviour pawnBehaviour;
 
-    private int chunkDistance = 3, chunkRemaining = 999999;
+    private int chunkDistance = 3, chunkRemaining = int.MaxValue;
 
     private void OnEnable()
     {
         ChunkBehaviour.EndTileTriggered += SpawnNextTile;
+
         WallBehaviour.PassedCorrectly += PassedWallTriggered;
         WallBehaviour.PassedWrongly += HitWallTriggered;
+
         SwipeDetector.OnSwipe += SwipeDetected;
+
+        StateManager.OnGameLoopStart += StartPlaying;
     }
     private void OnDisable()
     {
         ChunkBehaviour.EndTileTriggered -= SpawnNextTile;
+
         WallBehaviour.PassedCorrectly -= PassedWallTriggered;
         WallBehaviour.PassedWrongly -= HitWallTriggered;
+
         SwipeDetector.OnSwipe -= SwipeDetected;
+
+        StateManager.OnGameLoopStart -= StartPlaying;
 
     }
 
     // Start is called before the first frame update
     void Start()
+    {
+        InitLevel();
+    }
+
+    void InitLevel()
     {
         cluster = new GameObject("cluster").transform;
 
@@ -40,20 +53,28 @@ public class GameManager : Singleton<GameManager>
         cluster.rotation = Quaternion.identity;
         cluster.localScale = Vector3.one;
 
-        chunkRemaining = ClusterDimension - ClusterDimension / 2;
-
         for (int i = 0; i < ClusterDimension; i++)
         {
             SpawnNextTile();
         }
         /*Spawn first 20 chunks*/
+    }
+
+    void StartPlaying()
+    {
+        chunkRemaining = 0;
+        InitPlayer();
+    }
+
+    void InitPlayer()
+    {
         StartCoroutine(SpawnNextPawn());
     }
 
     public void PassedWallTriggered()
     {
         ProgressionManager.Instance.WallPassed();
-        StartCoroutine(SpawnNextPawn());
+        InitPlayer();
     }
     public void HitWallTriggered()
     {

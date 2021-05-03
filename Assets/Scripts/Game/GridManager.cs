@@ -239,8 +239,6 @@ public class GridManager : Singleton<GridManager>
     }
 
 
-
-
     private void RotateObject(GameObject who)
     {
         if (who.name != "Q")
