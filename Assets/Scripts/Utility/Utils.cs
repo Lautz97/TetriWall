@@ -7,10 +7,6 @@ public class Utils : MonoBehaviour
         return camera.ScreenToViewportPoint(position);
     }
 
-    [SerializeField] public enum Direction { North, East, South, West }
-
-    [SerializeField] public enum Shape { zero, Q, L, J, I, Z, S, T }
-
     public static string currentScoreKey = "currentScore", hiScoreKey = "highestScore";
 
 }

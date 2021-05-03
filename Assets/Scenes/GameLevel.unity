@@ -150,8 +150,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 0.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -806,11 +806,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1140566748}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b1d73712b7215448bbbd75e39f9ec16, type: 3}
+  m_Script: {fileID: 11500000, guid: 2aaf00e690f6fe9439bf832bee49b5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentScoreText: {fileID: 734232629}
-  hiScoreText: {fileID: 649328120}
   menuPanel: {fileID: 1534192310}
   pausePanel: {fileID: 1132017053}
   loadingPanel: {fileID: 1145942823}
@@ -914,6 +912,7 @@ GameObject:
   - component: {fileID: 1214866848}
   - component: {fileID: 1214866850}
   - component: {fileID: 1214866849}
+  - component: {fileID: 1214866851}
   m_Layer: 5
   m_Name: GameLoopPanel
   m_TagString: Untagged
@@ -979,6 +978,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214866847}
   m_CullTransparentMesh: 0
+--- !u!114 &1214866851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214866847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e5a1d21f373109498e190ff8980f4e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScoreText: {fileID: 734232629}
+  hiScoreText: {fileID: 649328120}
 --- !u!1 &1465171367
 GameObject:
   m_ObjectHideFlags: 0

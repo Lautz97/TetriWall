@@ -1,31 +1,8 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
 {
-    [SerializeField] private TMP_Text currentScoreText, hiScoreText;
     [SerializeField] private GameObject menuPanel, pausePanel, loadingPanel, gameloopPanel, gameoverPanel;
-
-    private void Start()
-    {
-        UpdatePoints();
-    }
-
-    private void OnEnable()
-    {
-        ProgressionManager.PointsUpdated += UpdatePoints;
-    }
-    private void OnDisable()
-    {
-        ProgressionManager.PointsUpdated -= UpdatePoints;
-    }
-
-    private void UpdatePoints()
-    {
-        currentScoreText.text = "Points: " + SaveLoad.LoadCurrentScore();
-        hiScoreText.text = "Best: " + SaveLoad.LoadHiScore();
-
-    }
 
     private void DisableAllPanels()
     {
