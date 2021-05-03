@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PawnBehaviour : Singleton<PawnBehaviour>
 {
@@ -10,15 +8,29 @@ public class PawnBehaviour : Singleton<PawnBehaviour>
     public float speedMultiplier = 1;
 
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
         BGMaterial.mainTextureOffset = Vector2.zero;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         BGMaterial.mainTextureOffset += (Vector2.up * speed * speedMultiplier * Time.deltaTime) / parallaxFactor;
         transform.position += (Vector3.forward * Time.deltaTime * speed * speedMultiplier);
+    }
+    private void OnEnable()
+    {
+        StateManager.OnPlay += AddBooster;
+    }
+
+    private void OnDisable()
+    {
+        StateManager.OnPlay -= AddBooster;
+    }
+
+    void AddBooster()
+    {
+        gameObject.AddComponent<InitialPawnBooster>();
     }
 }

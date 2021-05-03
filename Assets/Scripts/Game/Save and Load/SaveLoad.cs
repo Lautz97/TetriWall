@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public static class SaveLoad
+﻿public static class SaveLoad
 {
     public static int LoadCurrentScore() => PlayerPrefsSL.LoadCurrentScore();
 
