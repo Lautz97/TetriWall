@@ -22,61 +22,64 @@ public class SwipeDetector : MonoBehaviour
 
     private void Update()
     {
-        if (Input.touchCount > 0)
+        if (StateManager.GetGameState == GameState.playing)
         {
-            Touch t = Input.GetTouch(0);
-            if (t.phase == TouchPhase.Began)
+            if (Input.touchCount > 0)
             {
-                SetPositionAndTime(t.position, out downPosition, out downTime);
-                SetPositionAndTime(t.position, out upPosition, out upTime);
+                Touch t = Input.GetTouch(0);
+                if (t.phase == TouchPhase.Began)
+                {
+                    SetPositionAndTime(t.position, out downPosition, out downTime);
+                    SetPositionAndTime(t.position, out upPosition, out upTime);
+                }
+                if (!detectOnlyAfterRelease && t.phase == TouchPhase.Moved)
+                {
+                    SetPositionAndTime(t.position, out downPosition, out downTime);
+                    DetectSwipe();
+                }
+                if (t.phase == TouchPhase.Ended || t.phase == TouchPhase.Canceled)
+                {
+                    SetPositionAndTime(t.position, out downPosition, out downTime);
+                    DetectSwipe();
+                }
             }
-            if (!detectOnlyAfterRelease && t.phase == TouchPhase.Moved)
+            if (testInput)
             {
-                SetPositionAndTime(t.position, out downPosition, out downTime);
-                DetectSwipe();
-            }
-            if (t.phase == TouchPhase.Ended || t.phase == TouchPhase.Canceled)
-            {
-                SetPositionAndTime(t.position, out downPosition, out downTime);
-                DetectSwipe();
-            }
-        }
-        if (testInput)
-        {
 
 
-            if (Input.GetKeyDown(KeyCode.Escape)) StateManager.UpdateState(StateManager.GetGameState == GameState.paused ? GameState.playing : GameState.paused);
+                if (Input.GetKeyDown(KeyCode.Escape)) StateManager.UpdateState(StateManager.GetGameState == GameState.paused ? GameState.playing : GameState.paused);
 
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-            {
-                SetPositionAndTime(Vector2.left * minSwipeDistance, out downPosition, out downTime);
-                SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
-                DetectSwipe();
-            }
-            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-            {
-                SetPositionAndTime(Vector2.right * minSwipeDistance, out downPosition, out downTime);
-                SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
-                DetectSwipe();
-            }
-            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-            {
-                SetPositionAndTime(Vector2.up * minSwipeDistance, out downPosition, out downTime);
-                SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
-                DetectSwipe();
-            }
-            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-            {
-                SetPositionAndTime(Vector2.down * minSwipeDistance, out downPosition, out downTime);
-                SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
-                DetectSwipe();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                SetPositionAndTime(Vector2.zero, out downPosition, out downTime);
-                SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
-                DetectSwipe();
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+                {
+                    SetPositionAndTime(Vector2.left * minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
+                    DetectSwipe();
+                }
+                if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+                {
+                    SetPositionAndTime(Vector2.right * minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
+                    DetectSwipe();
+                }
+                if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+                {
+                    SetPositionAndTime(Vector2.up * minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
+                    DetectSwipe();
+                }
+                if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+                {
+                    SetPositionAndTime(Vector2.down * minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
+                    DetectSwipe();
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    SetPositionAndTime(Vector2.zero, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
+                    DetectSwipe();
+                }
             }
         }
     }
@@ -106,16 +109,13 @@ public class SwipeDetector : MonoBehaviour
 
     private void SendSwipe(Vector2 dir)
     {
-        if (StateManager.GetGameState == GameState.playing)
+        SwipeData swipe = new SwipeData()
         {
-            SwipeData swipe = new SwipeData()
-            {
-                Direction = dir,
-                StartPosition = downPosition,
-                EndPosition = upPosition
-            };
-            OnSwipe?.Invoke(swipe);
-        }
+            Direction = dir,
+            StartPosition = downPosition,
+            EndPosition = upPosition
+        };
+        OnSwipe?.Invoke(swipe);
     }
 
     private bool maxTimeExceeded() => (downTime - upTime) > maxTimeSwipe;
