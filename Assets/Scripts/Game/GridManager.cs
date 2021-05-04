@@ -106,7 +106,7 @@ public class GridManager : Singleton<GridManager>
         */
         if (!Utils.onlyHorizontal)
         {
-            int yPosition = Random.Range(-width / 2, width / 2);
+            int yPosition = Random.Range(0, height);
             for (int i = 0; i < Mathf.Abs(yPosition); i++)
             {
                 MoveWallPlaceholder(Vector2.up * Mathf.Sign(yPosition));
