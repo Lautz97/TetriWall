@@ -6,8 +6,8 @@ public class GridManager : Singleton<GridManager>
 
     private int numberOfPreparedWalls = 5;
 
-    // this will make tetrimini slide down every time they rotate
-    private bool gravity = true;
+    // // this will make tetrimini slide down every time they rotate
+    // private bool gravity = true;
 
     // dimensions of the grids
     public int width, height;
@@ -52,7 +52,7 @@ public class GridManager : Singleton<GridManager>
     //utility in case something has to be changed
     public void SetGeneric(GameObject playerContainer, bool gravity = true, int width = 6, int height = 4, float cellSize = 0.9f)
     {
-        this.gravity = gravity;
+        // this.gravity = gravity;
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
@@ -98,6 +98,19 @@ public class GridManager : Singleton<GridManager>
         for (int i = 0; i < Mathf.Abs(xPosition); i++)
         {
             MoveWallPlaceholder(Vector2.right * Mathf.Sign(xPosition));
+        }
+
+        /**
+        *** Pick a random number between the margins of the grid
+        *** Use that number to try to move to the choosen row
+        */
+        if (!Utils.onlyHorizontal)
+        {
+            int yPosition = Random.Range(-width / 2, width / 2);
+            for (int i = 0; i < Mathf.Abs(yPosition); i++)
+            {
+                MoveWallPlaceholder(Vector2.up * Mathf.Sign(yPosition));
+            }
         }
 
         /**
@@ -278,7 +291,7 @@ public class GridManager : Singleton<GridManager>
                     MoveObject(-error, who);
                 }
             }
-            if (gravity) MoveObject(Vector2.down, who);
+            if (Utils.onlyHorizontal) MoveObject(Vector2.down, who);
         }
     }
 

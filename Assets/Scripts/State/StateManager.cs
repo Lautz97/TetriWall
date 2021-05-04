@@ -1,12 +1,13 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class StateManager
 {
     public static GameState GetGameState { private set; get; }
     public static bool isInitialized = false;
 
-    public static Action OnMainMenu, OnPlay, OnPause, OnGameOver;
+    public static Action OnMainMenu, OnPlay, OnPause, OnGameOver, OnReset;
 
     public static void UpdateState(GameState nextState)
     {
@@ -35,6 +36,13 @@ public static class StateManager
                 OnGameOver?.Invoke();
                 break;
 
+            case GameState.reset:
+                Time.timeScale = 1;
+                isInitialized = false;
+                SceneManager.LoadScene("GameLevel", LoadSceneMode.Single);
+                // OnReset?.Invoke();
+                break;
+
             default:
                 break;
         }
@@ -43,5 +51,5 @@ public static class StateManager
 }
 public enum GameState
 {
-    mainMenu, playing, paused, gameOver
+    mainMenu, playing, paused, gameOver, reset
 }

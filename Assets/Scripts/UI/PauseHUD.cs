@@ -12,9 +12,13 @@ public class PauseHUD : MonoBehaviour
 
     public void QuitToMenu()
     {
-        SceneManager.LoadScene("GameLevel", LoadSceneMode.Single);
         //TODO FIX THIS
-        // StateManager.UpdateState(GameState.mainMenu);
+        StateManager.UpdateState(GameState.reset);
+    }
+
+    public void TestMenu()
+    {
+        gameObject.GetComponent<TestingHUD>().enabled = !gameObject.GetComponent<TestingHUD>().enabled;
     }
 
 }

@@ -9,4 +9,12 @@ public class Utils : MonoBehaviour
 
     public static string currentScoreKey = "currentScore", hiScoreKey = "highestScore";
 
+    public static float minSwipeDistance = 20f;
+
+    public static float maxTimeSwipe = 2f;
+
+    public static bool detectOnlyAfterRelease = true;
+
+    public static bool onlyHorizontal = true;
+
 }

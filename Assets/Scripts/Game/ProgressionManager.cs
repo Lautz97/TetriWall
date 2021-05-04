@@ -79,7 +79,7 @@ public class ProgressionManager : Singleton<ProgressionManager>
 
                 PointsUpdated?.Invoke();
             }
-            SceneManager.LoadScene("GameLevel", LoadSceneMode.Single);
+            StateManager.UpdateState(GameState.reset);
         }
     }
 

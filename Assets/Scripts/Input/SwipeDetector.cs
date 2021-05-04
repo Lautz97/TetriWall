@@ -4,12 +4,8 @@ using UnityEngine;
 public class SwipeDetector : MonoBehaviour
 {
     private bool testInput = false;
-    private bool onlyHorizontal = true;
     private Vector2 downPosition, upPosition;
     private float downTime, upTime;
-    private bool detectOnlyAfterRelease = true;
-    [SerializeField] private float minSwipeDistance = 20f;
-    [SerializeField] private float maxTimeSwipe = 2f;
     public static Action<SwipeData> OnSwipe;
 
     private void Awake()
@@ -22,6 +18,7 @@ public class SwipeDetector : MonoBehaviour
 
     private void Update()
     {
+        TouchPhase lastPhase = TouchPhase.Began;
         if (StateManager.GetGameState == GameState.playing)
         {
             if (Input.touchCount > 0)
@@ -31,16 +28,24 @@ public class SwipeDetector : MonoBehaviour
                 {
                     SetPositionAndTime(t.position, out downPosition, out downTime);
                     SetPositionAndTime(t.position, out upPosition, out upTime);
+                    lastPhase = TouchPhase.Began;
                 }
-                if (!detectOnlyAfterRelease && t.phase == TouchPhase.Moved)
+                if (!Utils.detectOnlyAfterRelease && t.phase == TouchPhase.Moved)
                 {
                     SetPositionAndTime(t.position, out downPosition, out downTime);
-                    DetectSwipe();
+                    if (minSwipeDistanceCheck())
+                    {
+                        DetectSwipe();
+                    }
+                    lastPhase = TouchPhase.Moved;
                 }
                 if (t.phase == TouchPhase.Ended || t.phase == TouchPhase.Canceled)
                 {
                     SetPositionAndTime(t.position, out downPosition, out downTime);
-                    DetectSwipe();
+                    if (lastPhase != TouchPhase.Moved)
+                    {
+                        DetectSwipe();
+                    }
                 }
             }
             if (testInput)
@@ -52,25 +57,25 @@ public class SwipeDetector : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
                 {
-                    SetPositionAndTime(Vector2.left * minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.left * Utils.minSwipeDistance, out downPosition, out downTime);
                     SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                     DetectSwipe();
                 }
                 if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
                 {
-                    SetPositionAndTime(Vector2.right * minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.right * Utils.minSwipeDistance, out downPosition, out downTime);
                     SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                     DetectSwipe();
                 }
                 if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
                 {
-                    SetPositionAndTime(Vector2.up * minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.up * Utils.minSwipeDistance, out downPosition, out downTime);
                     SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                     DetectSwipe();
                 }
                 if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
                 {
-                    SetPositionAndTime(Vector2.down * minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.down * Utils.minSwipeDistance, out downPosition, out downTime);
                     SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                     DetectSwipe();
                 }
@@ -94,7 +99,7 @@ public class SwipeDetector : MonoBehaviour
                 {
                     SendSwipe(Vector2.right * Math.Sign(HorizontalMovement()));
                 }
-                if (Math.Abs(HorizontalMovement()) < Math.Abs(VerticalMovement()) && !onlyHorizontal)
+                if (Math.Abs(HorizontalMovement()) < Math.Abs(VerticalMovement()) && !Utils.onlyHorizontal)
                 {
                     SendSwipe(Vector2.up * Math.Sign(VerticalMovement()));
                 }
@@ -118,8 +123,8 @@ public class SwipeDetector : MonoBehaviour
         OnSwipe?.Invoke(swipe);
     }
 
-    private bool maxTimeExceeded() => (downTime - upTime) > maxTimeSwipe;
-    private bool minSwipeDistanceCheck() => (Math.Abs(VerticalMovement()) >= minSwipeDistance || Math.Abs(HorizontalMovement()) >= minSwipeDistance);
+    private bool maxTimeExceeded() => (downTime - upTime) > Utils.maxTimeSwipe;
+    private bool minSwipeDistanceCheck() => (Math.Abs(VerticalMovement()) >= Utils.minSwipeDistance || Math.Abs(HorizontalMovement()) >= Utils.minSwipeDistance);
     private float VerticalMovement() => (downPosition.y - upPosition.y);
     private float HorizontalMovement() => (downPosition.x - upPosition.x);
 

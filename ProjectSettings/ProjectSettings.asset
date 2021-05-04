@@ -244,7 +244,7 @@ PlayerSettings:
   clonedFromGUID: a9ab45d651447274b98057940d1af953
   templatePackageId: com.unity.template.3dextra@4.0.5
   templateDefaultScene: Assets/Scenes/SampleScene.unity
-  AndroidTargetArchitectures: 3
+  AndroidTargetArchitectures: 1
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: '{inproject}: '
@@ -724,7 +724,7 @@ PlayerSettings:
     33: UNITY_POST_PROCESSING_STACK_V2
   platformArchitecture: {}
   scriptingBackend:
-    Android: 1
+    Android: 0
   il2cppCompilerConfiguration: {}
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}
