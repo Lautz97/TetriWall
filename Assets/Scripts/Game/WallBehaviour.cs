@@ -9,7 +9,9 @@ public class WallBehaviour : MonoBehaviour
 
     bool checkT = true, checkC = true;
 
-    //TODO better positioning required
+
+    // this should trigger the "Player Success" state
+    //TODO better positioning of the attached block required
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "Brick" && checkT)
@@ -21,6 +23,8 @@ public class WallBehaviour : MonoBehaviour
             PassedCorrectly?.Invoke();
         }
     }
+
+    // this should trigger the "Player Error" state
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.name == "Pawn" && checkC)

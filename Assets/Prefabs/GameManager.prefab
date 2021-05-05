@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 145391347181429565}
   - component: {fileID: 145391347181429552}
-  - component: {fileID: 145391347181429564}
   - component: {fileID: 223155826}
+  - component: {fileID: 375049377}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -48,34 +48,6 @@ MonoBehaviour:
   chunk: {fileID: 8499612322962817664, guid: 7991e78c646b43a4cbe192920dc66c1f, type: 3}
   ClusterDimension: 20
   pawnBehaviour: {fileID: 0}
---- !u!114 &145391347181429564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 145391347181429553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9138730252ea8114094fd362e1157fc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  width: 6
-  height: 4
-  cellSize: 1
-  playerObject: {fileID: 0}
-  obstacleObject: {fileID: 0}
-  hollowBrick: {fileID: 2007328255329837636, guid: 8c7fc6a021a4bbd4790ffc6e28578661,
-    type: 3}
-  blockingBrick: {fileID: 2007328255329837636, guid: 19206de7fbbea7f4f9824f4c9fb27001,
-    type: 3}
-  shapes:
-  - {fileID: 1617980017444251648, guid: 5bc2af722793817428800817b8b582c8, type: 3}
-  - {fileID: 5093208852470853647, guid: 1a3a0a3eaad1a6e43912fabbbf24fae3, type: 3}
-  - {fileID: 1524880852666616152, guid: e10d23837ca7afa4593e17a135e743f7, type: 3}
-  - {fileID: 2363940872723064382, guid: 23b84bf15703e374ea90bf64997f87b8, type: 3}
-  - {fileID: 1347450754087142695, guid: 7ad28f3a2b3c68c44a28cee040d198c9, type: 3}
-  - {fileID: 9114648562714762869, guid: 7835836139d21354e8fee8f82e71ceb8, type: 3}
 --- !u!114 &223155826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,5 +58,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce40ba5a89baa6245913662043bf2823, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPoints: 0
+  wallPoints: 1
+  pointsMultiplier: 1
+  startingSpeed: 15
+  deltaSpeed: 0.5
+  startingSpeedMultiplier: 1
+--- !u!114 &375049377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145391347181429553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 230cab56c13c17c4daab202d1c424875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

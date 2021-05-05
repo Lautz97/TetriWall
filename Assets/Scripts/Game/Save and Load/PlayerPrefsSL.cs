@@ -22,6 +22,11 @@ public static class PlayerPrefsSL
         if (LoadBestScore() < score) PlayerPrefs.SetInt(Utils.hiScoreKey, score);
     }
 
+    public static void ResetCurrentScore()
+    {
+        PlayerPrefs.SetInt(Utils.currentScoreKey, 0);
+    }
+
     public static void ResetBestScore()
     {
         PlayerPrefs.SetInt(Utils.hiScoreKey, 0);

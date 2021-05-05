@@ -4,7 +4,7 @@ public class PawnBehaviour : Singleton<PawnBehaviour>
 {
     [SerializeField] private Material BGMaterial;
     [SerializeField] private float parallaxFactor = 1;
-    public float speed = 1;
+    public float speed = 15;
     public float speedMultiplier = 1;
 
     // Start is called before the first frame update

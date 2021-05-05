@@ -26,6 +26,7 @@ public class ProgressionManager : Singleton<ProgressionManager>
     }
 
 
+    // if not initialized yet, this should prepare progression variables for a fully new game sessione
     private void Initialize()
     {
         if (!StateManager.isInitialized)
@@ -39,35 +40,56 @@ public class ProgressionManager : Singleton<ProgressionManager>
         }
     }
 
-    private void ResetScoring()
-    {
-        currentPoints = 0;
-        SaveScoring();
-    }
-
+    // triggered by "Player Success"
     private void WallPassed()
     {
         if (StateManager.GetGameState == GameState.playing)
         {
-            PawnBehaviour.Instance.speed += deltaSpeed;
+            if (!gameObject.GetComponent<InitialPawnBooster>())
+            {
 
-            AddPoints();
+                AddPoints();
 
-            PointsUpdated?.Invoke();
+                PointsUpdated?.Invoke();
+
+                if (PawnBehaviour.Instance.speed <= 40)
+                {
+                    PawnBehaviour.Instance.speed += deltaSpeed;
+                    if (Utils.chunkDistance != 3)
+                        Utils.chunkDistance = 3;
+                }
+                if (PawnBehaviour.Instance.speed > 40 && PawnBehaviour.Instance.speed <= 60)
+                {
+                    PawnBehaviour.Instance.speed += deltaSpeed * 2;
+                    if (Utils.chunkDistance != 4)
+                        Utils.chunkDistance = 4;
+                }
+                if (PawnBehaviour.Instance.speed > 60 && Utils.chunkDistance != 5)
+                {
+                    if (Utils.chunkDistance != 5)
+                    {
+                        Utils.chunkDistance = 5;
+                        Utils.onlyHorizontal = false;
+                    }
+                }
+            }
         }
     }
 
+    // Add to current Points the just earned point quantity, counting also the multiplier
     private void AddPoints()
     {
         currentPoints += wallPoints * pointsMultiplier;
         SaveScoring();
     }
 
+    // this will set the multiplier
     private void SetMultiplier()
     {
 
     }
 
+    // triggered by "Player Error"
     private void GameOver()
     {
         if (StateManager.isInitialized)
@@ -83,9 +105,18 @@ public class ProgressionManager : Singleton<ProgressionManager>
         }
     }
 
+    // Saves both current and highest score, and possibly also the other variables.
+    // player may continue even if closed the game by error.
     private void SaveScoring()
     {
         SaveLoad.SaveCurrentScore(currentPoints);
         SaveLoad.SaveHiScore(currentPoints);
+    }
+
+    // method for resetting current score
+    private void ResetScoring()
+    {
+        SaveLoad.ResetCurrentScore();
+        currentPoints = SaveLoad.LoadCurrentScore();
     }
 }

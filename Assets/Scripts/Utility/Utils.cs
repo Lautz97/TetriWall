@@ -17,4 +17,6 @@ public class Utils : MonoBehaviour
 
     public static bool onlyHorizontal = true;
 
+    public static int chunkDistance = 3;
+
 }

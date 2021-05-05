@@ -10,7 +10,7 @@ public class GameManager : Singleton<GameManager>
     private Transform cluster;
     [SerializeField] private PawnBehaviour pawnBehaviour;
 
-    private int chunkDistance = 3, chunkRemaining = 999999;
+    private int chunkRemaining = 999999;
 
     private void OnEnable()
     {
@@ -43,7 +43,6 @@ public class GameManager : Singleton<GameManager>
         /*Spawn first 20 chunks*/
         InitStartingCluster();
     }
-
     private void InitStartingCluster()
     {
         for (int i = 0; i < ClusterDimension; i++)
@@ -51,6 +50,19 @@ public class GameManager : Singleton<GameManager>
             SpawnNextTile();
         }
     }
+    private void SpawnNextTile()
+    {
+        GameObject spawnedChunk = Instantiate(chunk, NextTileSpawn, Quaternion.identity, cluster);
+        NextTileSpawn = spawnedChunk.GetComponent<ChunkBehaviour>().NextSpawnPoint;
+        if (chunkRemaining > 0) chunkRemaining--;
+        else
+        {
+            chunkRemaining = Utils.chunkDistance;
+            GameInstancesManager.ActivateWall(spawnedChunk.transform);
+        }
+    }
+
+
 
     private void StartSession()
     {
@@ -60,11 +72,17 @@ public class GameManager : Singleton<GameManager>
             NextPawn();
         }
     }
-
     private void NextPawn()
     {
         StartCoroutine(SpawnNextPawn());
     }
+    private IEnumerator SpawnNextPawn()
+    {
+        yield return new WaitForSeconds(0.15f);
+        GameInstancesManager.InstanciateNextPawn();
+    }
+
+
 
     private void PassedWallTriggered()
     {
@@ -75,23 +93,9 @@ public class GameManager : Singleton<GameManager>
         StateManager.UpdateState(GameState.gameOver);
     }
 
-    private void SpawnNextTile()
-    {
-        GameObject spawnedChunk = Instantiate(chunk, NextTileSpawn, Quaternion.identity, cluster);
-        NextTileSpawn = spawnedChunk.GetComponent<ChunkBehaviour>().NextSpawnPoint;
-        if (chunkRemaining > 0) chunkRemaining--;
-        else
-        {
-            chunkRemaining = chunkDistance;
-            GridManager.Instance.ActivateWall(spawnedChunk.transform);
-        }
-    }
 
-    private IEnumerator SpawnNextPawn()
-    {
-        yield return new WaitForSeconds(0.5f);
-        GridManager.Instance.InstanciateNextPawn();
-    }
+
+
 
     private void SwipeDetected(SwipeData sw)
     {
@@ -104,14 +108,12 @@ public class GameManager : Singleton<GameManager>
             MovePawn(sw.Direction);
         }
     }
-
     private void MovePawn(Vector2 where)
     {
-        GridManager.Instance.MoveActive(where);
+        TetriminosController.MoveActive(where);
     }
     private void RotatePawn()
     {
-        GridManager.Instance.RotateActive();
+        TetriminosController.RotateActive();
     }
-
 }
