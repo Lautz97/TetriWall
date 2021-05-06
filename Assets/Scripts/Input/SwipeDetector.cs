@@ -30,7 +30,7 @@ public class SwipeDetector : MonoBehaviour
                     SetPositionAndTime(t.position, out upPosition, out upTime);
                     lastPhase = TouchPhase.Began;
                 }
-                if (!Utils.detectOnlyAfterRelease && t.phase == TouchPhase.Moved)
+                if (!InputSettings.detectOnlyAfterRelease && t.phase == TouchPhase.Moved)
                 {
                     SetPositionAndTime(t.position, out downPosition, out downTime);
                     if (minSwipeDistanceCheck())
@@ -57,25 +57,25 @@ public class SwipeDetector : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
                 {
-                    SetPositionAndTime(Vector2.left * Utils.minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.left * InputSettings.minSwipeDistance, out downPosition, out downTime);
                     SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                     DetectSwipe();
                 }
                 if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
                 {
-                    SetPositionAndTime(Vector2.right * Utils.minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.right * InputSettings.minSwipeDistance, out downPosition, out downTime);
                     SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                     DetectSwipe();
                 }
                 if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
                 {
-                    SetPositionAndTime(Vector2.up * Utils.minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.up * InputSettings.minSwipeDistance, out downPosition, out downTime);
                     SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                     DetectSwipe();
                 }
                 if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
                 {
-                    SetPositionAndTime(Vector2.down * Utils.minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.down * InputSettings.minSwipeDistance, out downPosition, out downTime);
                     SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                     DetectSwipe();
                 }
@@ -99,7 +99,7 @@ public class SwipeDetector : MonoBehaviour
                 {
                     SendSwipe(Vector2.right * Math.Sign(HorizontalMovement()));
                 }
-                if (Math.Abs(HorizontalMovement()) < Math.Abs(VerticalMovement()) && !Utils.onlyHorizontal)
+                if (Math.Abs(HorizontalMovement()) < Math.Abs(VerticalMovement()) && !GamePlaySettings.onlyHorizontal)
                 {
                     SendSwipe(Vector2.up * Math.Sign(VerticalMovement()));
                 }
@@ -123,8 +123,8 @@ public class SwipeDetector : MonoBehaviour
         OnSwipe?.Invoke(swipe);
     }
 
-    private bool maxTimeExceeded() => (downTime - upTime) > Utils.maxTimeSwipe;
-    private bool minSwipeDistanceCheck() => (Math.Abs(VerticalMovement()) >= Utils.minSwipeDistance || Math.Abs(HorizontalMovement()) >= Utils.minSwipeDistance);
+    private bool maxTimeExceeded() => (downTime - upTime) > InputSettings.maxTimeSwipe;
+    private bool minSwipeDistanceCheck() => (Math.Abs(VerticalMovement()) >= InputSettings.minSwipeDistance || Math.Abs(HorizontalMovement()) >= InputSettings.minSwipeDistance);
     private float VerticalMovement() => (downPosition.y - upPosition.y);
     private float HorizontalMovement() => (downPosition.x - upPosition.x);
 

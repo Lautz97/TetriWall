@@ -5,17 +5,17 @@ public class GridSettings : Singleton<GridSettings>
 {
     // dimensions of the grids
     public int height { get => Height; private set => Height = value; }
-    [SerializeField] private int Height = 4;
+    private int Height = 4;
     public int width { get => Width; private set => Width = value; }
-    [SerializeField] private int Width = 6;
+    private int Width = 6;
 
     // number of prepared walls
     public int numberOfPreparedWalls { get => NumberOfPreparedWalls; private set => NumberOfPreparedWalls = value; }
-    [SerializeField] private int NumberOfPreparedWalls = 4;
+    private int NumberOfPreparedWalls = 5;
 
     // dimension of the cell of a grid
     public float cellSize { get => CellSize; private set => CellSize = value; }
-    [SerializeField] private float CellSize = 1;
+    private float CellSize = 1;
 
     // the player object will be the same throught all the game and will be the container for the player grid
     // the obstacle object will be different for each wall and will be the container for the obstacle grid

@@ -24,37 +24,53 @@ public static class QueueManager
         GameObject shape = GridSettings.Instance.shapes[Random.Range(0, GridSettings.Instance.shapes.Length)];
         GridSettings.Instance.wallShape = GameInstancesManager.InstanciateWallBrick(GridSettings.Instance.obstacleObject, shape, Vector2.zero);
 
-        /**
-        *** Pick a random number between 0 and 3
-        *** Use that number to set rotation of tetrimino at 0/90/180/270 °
-        */
-        int rotation = Random.Range(0, 3);
-        for (int i = 0; i < rotation; i++)
+        System.Action rotateRandom = () =>
         {
-            TetriminosController.RotateWallPlaceholder();
-        }
-
-        /**
-        *** Pick a random number between the margins of the grid
-        *** Use that number to try to move to the choosen column
-        */
-        int xPosition = Random.Range(-GridSettings.Instance.width / 2, GridSettings.Instance.width / 2);
-        for (int i = 0; i < Mathf.Abs(xPosition); i++)
-        {
-            TetriminosController.MoveWallPlaceholder(Vector2.right * Mathf.Sign(xPosition));
-        }
-
-        /**
-        *** Pick a random number between the margins of the grid
-        *** Use that number to try to move to the choosen row
-        */
-        if (!Utils.onlyHorizontal)
-        {
-            int yPosition = Random.Range(0, GridSettings.Instance.height);
-            for (int i = 0; i < Mathf.Abs(yPosition); i++)
+            /**
+            *** Pick a random number between 0 and 3
+            *** Use that number to set rotation of tetrimino at 0/90/180/270 °
+            */
+            int rotation = Random.Range(0, 3);
+            for (int i = 0; i < rotation; i++)
             {
-                TetriminosController.MoveWallPlaceholder(Vector2.up * Mathf.Sign(yPosition));
+                TetriminosController.RotateWallPlaceholder();
             }
+        };
+
+        System.Action moveRandom = () =>
+        {   /**
+            *** Pick a random number between the margins of the grid
+            *** Use that number to try to move to the choosen column
+            */
+            int xPosition = Random.Range(-GridSettings.Instance.width / 2, GridSettings.Instance.width / 2);
+            for (int i = 0; i < Mathf.Abs(xPosition); i++)
+            {
+                TetriminosController.MoveWallPlaceholder(Vector2.right * Mathf.Sign(xPosition));
+            }
+
+            /**
+            *** Pick a random number between the margins of the grid
+            *** Use that number to try to move to the choosen row
+            */
+            if (!GamePlaySettings.onlyHorizontal)
+            {
+                int yPosition = Random.Range(0, GridSettings.Instance.height);
+                for (int i = 0; i < Mathf.Abs(yPosition); i++)
+                {
+                    TetriminosController.MoveWallPlaceholder(Vector2.up * Mathf.Sign(yPosition));
+                }
+            }
+        };
+
+        if (Random.Range(0.0f, 1.0f) >= 0.5f)
+        {
+            rotateRandom();
+            moveRandom();
+        }
+        else
+        {
+            moveRandom();
+            rotateRandom();
         }
 
         /**

@@ -62,7 +62,7 @@ public static class TetriminosController
                     MoveObject(-error, who);
                 }
             }
-            if (Utils.onlyHorizontal) MoveObject(Vector2.down, who);
+            if (GamePlaySettings.onlyHorizontal) MoveObject(Vector2.down, who);
         }
     }
 

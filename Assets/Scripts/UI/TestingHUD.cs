@@ -11,9 +11,9 @@ public class TestingHUD : MonoBehaviour
     private void OnEnable()
     {
         testingPanel.SetActive(true);
-        minSwipeText.text = Utils.minSwipeDistance.ToString();
-        contInputText.text = (!Utils.detectOnlyAfterRelease).ToString();
-        onlyHorizontalText.text = (Utils.onlyHorizontal).ToString();
+        minSwipeText.text = InputSettings.minSwipeDistance.ToString();
+        contInputText.text = (!InputSettings.detectOnlyAfterRelease).ToString();
+        onlyHorizontalText.text = (GamePlaySettings.onlyHorizontal).ToString();
     }
     private void OnDisable()
     {
@@ -21,20 +21,20 @@ public class TestingHUD : MonoBehaviour
     }
     public void UpdateMinSwipeDistance(float delta)
     {
-        Utils.minSwipeDistance += delta;
-        minSwipeText.text = Utils.minSwipeDistance.ToString();
+        InputSettings.minSwipeDistance += delta;
+        minSwipeText.text = InputSettings.minSwipeDistance.ToString();
     }
 
     public void UpdateContinuousDetection()
     {
-        Utils.detectOnlyAfterRelease = !Utils.detectOnlyAfterRelease;
-        contInputText.text = (!Utils.detectOnlyAfterRelease).ToString();
+        InputSettings.detectOnlyAfterRelease = !InputSettings.detectOnlyAfterRelease;
+        contInputText.text = (!InputSettings.detectOnlyAfterRelease).ToString();
     }
 
     public void UpdateOnlyHorizontal()
     {
-        Utils.onlyHorizontal = !Utils.onlyHorizontal;
-        onlyHorizontalText.text = (Utils.onlyHorizontal).ToString();
+        GamePlaySettings.onlyHorizontal = !GamePlaySettings.onlyHorizontal;
+        onlyHorizontalText.text = (GamePlaySettings.onlyHorizontal).ToString();
     }
 
 }

@@ -55,21 +55,21 @@ public class ProgressionManager : Singleton<ProgressionManager>
                 if (PawnBehaviour.Instance.speed <= 40)
                 {
                     PawnBehaviour.Instance.speed += deltaSpeed;
-                    if (Utils.chunkDistance != 3)
-                        Utils.chunkDistance = 3;
+                    if (GamePlaySettings.chunkDistance != 3)
+                        GamePlaySettings.chunkDistance = 3;
                 }
                 if (PawnBehaviour.Instance.speed > 40 && PawnBehaviour.Instance.speed <= 60)
                 {
                     PawnBehaviour.Instance.speed += deltaSpeed * 2;
-                    if (Utils.chunkDistance != 4)
-                        Utils.chunkDistance = 4;
+                    if (GamePlaySettings.chunkDistance != 4)
+                        GamePlaySettings.chunkDistance = 4;
                 }
-                if (PawnBehaviour.Instance.speed > 60 && Utils.chunkDistance != 5)
+                if (PawnBehaviour.Instance.speed > 60 && GamePlaySettings.chunkDistance != 5)
                 {
-                    if (Utils.chunkDistance != 5)
+                    if (GamePlaySettings.chunkDistance != 5)
                     {
-                        Utils.chunkDistance = 5;
-                        Utils.onlyHorizontal = false;
+                        GamePlaySettings.chunkDistance = 5;
+                        GamePlaySettings.onlyHorizontal = false;
                     }
                 }
             }

@@ -15,8 +15,10 @@ public class GameManager : Singleton<GameManager>
     private void OnEnable()
     {
         ChunkBehaviour.EndTileTriggered += SpawnNextTile;
+
         WallBehaviour.PassedCorrectly += PassedWallTriggered;
         WallBehaviour.PassedWrongly += HitWallTriggered;
+
         SwipeDetector.OnSwipe += SwipeDetected;
 
         StateManager.OnPlay += StartSession;
@@ -24,8 +26,10 @@ public class GameManager : Singleton<GameManager>
     private void OnDisable()
     {
         ChunkBehaviour.EndTileTriggered -= SpawnNextTile;
+
         WallBehaviour.PassedCorrectly -= PassedWallTriggered;
         WallBehaviour.PassedWrongly -= HitWallTriggered;
+
         SwipeDetector.OnSwipe -= SwipeDetected;
 
         StateManager.OnPlay -= StartSession;
@@ -57,7 +61,7 @@ public class GameManager : Singleton<GameManager>
         if (chunkRemaining > 0) chunkRemaining--;
         else
         {
-            chunkRemaining = Utils.chunkDistance;
+            chunkRemaining = GamePlaySettings.chunkDistance;
             GameInstancesManager.ActivateWall(spawnedChunk.transform);
         }
     }
