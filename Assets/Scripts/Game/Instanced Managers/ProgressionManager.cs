@@ -5,6 +5,8 @@ public class ProgressionManager : MonoBehaviour
 {
     public static System.Action PointsUpdated;
 
+    private int level = 0;
+
     private void OnEnable()
     {
         WallBehaviour.PassedCorrectly += WallPassed;
@@ -29,6 +31,7 @@ public class ProgressionManager : MonoBehaviour
         {
             DifficultyManager.Initialize();
             ScoreManager.Initialize();
+            level = 0;
         }
     }
 
@@ -49,26 +52,36 @@ public class ProgressionManager : MonoBehaviour
                     DifficultyManager.IncreaseActualSpeed();
                     if (GamePlayCounters.actualChunkDistance < 3)
                         DifficultyManager.IncreaseChunkDistance();
-                    Debug.Log("level 1");
+                }
+
+                if (GamePlayCounters.actualSpeed > 20 - 5 * GamePlayCounters.actualSpeedMultiplier)
+                {
+                    if (GamePlayCounters.actualChunkDistance < 4)
+                    {
+                        DifficultyManager.IncreaseChunkDistance();
+                    }
                 }
                 if (GamePlayCounters.actualSpeed > 20 && GamePlayCounters.actualSpeed <= 40)
                 {
+                    if (level < 1)
+                    {
+                        level = 1;
+                        DifficultyManager.IncreaseActualSpeedMultiplier();
+                    }
                     DifficultyManager.IncreaseActualSpeed();
+                }
+
+                if (GamePlayCounters.actualSpeed > 60 - 5 * GamePlayCounters.actualSpeedMultiplier)
+                {
                     if (GamePlayCounters.actualChunkDistance < 4)
                     {
-                        DifficultyManager.IncreaseActualSpeedMultiplier();
                         DifficultyManager.IncreaseChunkDistance();
                     }
-                    Debug.Log("level 2");
                 }
                 if (GamePlayCounters.actualSpeed > 60 && GamePlayCounters.actualChunkDistance < 5)
                 {
-                    DifficultyManager.IncreaseChunkDistance();
                     DifficultyManager.EnableVerticalMovement();
-                    Debug.Log("level 3");
                 }
-
-                Debug.Log(GamePlayCounters.actualSpeed);
             }
         }
     }
