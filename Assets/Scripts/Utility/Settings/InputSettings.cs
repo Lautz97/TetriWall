@@ -1,8 +1,9 @@
 public static class InputSettings
 {
-    public static float minSwipeDistance = 20f;
+    public static float maxTapDistance = 0.5f;
+    public static float minSwipeDistance = 50f;
+    public static float maxTapTime = 0.125f;
+    public static float maxSwipeTime = 60f;
 
-    public static float maxTimeSwipe = 2f;
-
-    public static bool detectOnlyAfterRelease = true;
+    public static bool detectOnlyAfterRelease = false;
 }

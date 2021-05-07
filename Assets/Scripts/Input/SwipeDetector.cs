@@ -28,33 +28,28 @@ public class SwipeDetector : MonoBehaviour
                 {
                     SetPositionAndTime(t.position, out downPosition, out downTime);
                     SetPositionAndTime(t.position, out upPosition, out upTime);
-                    lastPhase = TouchPhase.Began;
                 }
-                if (!InputSettings.detectOnlyAfterRelease && t.phase == TouchPhase.Moved)
+                if (!InputSettings.detectOnlyAfterRelease && (t.phase == TouchPhase.Moved || t.phase == TouchPhase.Stationary))
                 {
                     SetPositionAndTime(t.position, out downPosition, out downTime);
                     if (minSwipeDistanceCheck())
                     {
                         DetectSwipe();
                     }
-                    lastPhase = TouchPhase.Moved;
                 }
                 if (t.phase == TouchPhase.Ended || t.phase == TouchPhase.Canceled)
                 {
                     SetPositionAndTime(t.position, out downPosition, out downTime);
-                    if (lastPhase != TouchPhase.Moved)
+                    if (!minSwipeDistanceCheck() && lastPhase == TouchPhase.Began)
                     {
                         DetectSwipe();
                     }
                 }
+                lastPhase = t.phase;
             }
             if (testInput)
             {
-
-
                 if (Input.GetKeyDown(KeyCode.Escape)) StateManager.UpdateState(StateManager.GetGameState == GameState.paused ? GameState.playing : GameState.paused);
-
-
                 if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
                 {
                     SetPositionAndTime(Vector2.left * InputSettings.minSwipeDistance, out downPosition, out downTime);
@@ -91,9 +86,9 @@ public class SwipeDetector : MonoBehaviour
 
     private void DetectSwipe()
     {
-        if (!maxTimeExceeded())
+        if (!maxSwipeTimeExceeded())
         {
-            if (minSwipeDistanceCheck())
+            if (minSwipeDistanceCheck() && !maxTapDistanceCheck())
             {
                 if (Math.Abs(HorizontalMovement()) >= Math.Abs(VerticalMovement()))
                 {
@@ -104,9 +99,9 @@ public class SwipeDetector : MonoBehaviour
                     SendSwipe(Vector2.up * Math.Sign(VerticalMovement()));
                 }
             }
-            if (!minSwipeDistanceCheck())
+            if (!minSwipeDistanceCheck() && maxTapDistanceCheck())
             {
-                SendSwipe(Vector2.zero);
+                if (!maxTapTimeExceeded()) SendSwipe(Vector2.zero);
             }
         }
         SetPositionAndTime(downPosition, out upPosition, out upTime);
@@ -123,7 +118,9 @@ public class SwipeDetector : MonoBehaviour
         OnSwipe?.Invoke(swipe);
     }
 
-    private bool maxTimeExceeded() => (downTime - upTime) > InputSettings.maxTimeSwipe;
+    private bool maxSwipeTimeExceeded() => (downTime - upTime) > InputSettings.maxSwipeTime;
+    private bool maxTapTimeExceeded() => (downTime - upTime) > InputSettings.maxTapTime;
+    private bool maxTapDistanceCheck() => (Math.Abs(VerticalMovement()) < InputSettings.maxTapDistance || Math.Abs(HorizontalMovement()) < InputSettings.maxTapDistance);
     private bool minSwipeDistanceCheck() => (Math.Abs(VerticalMovement()) >= InputSettings.minSwipeDistance || Math.Abs(HorizontalMovement()) >= InputSettings.minSwipeDistance);
     private float VerticalMovement() => (downPosition.y - upPosition.y);
     private float HorizontalMovement() => (downPosition.x - upPosition.x);
