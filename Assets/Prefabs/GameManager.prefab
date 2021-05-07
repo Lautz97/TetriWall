@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 145391347181429565}
-  - component: {fileID: 145391347181429552}
-  - component: {fileID: 223155826}
-  - component: {fileID: 375049377}
+  - component: {fileID: 6133935005005467372}
+  - component: {fileID: 2044156449828890111}
+  - component: {fileID: 2648457096743081960}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &145391347181429552
+--- !u!114 &6133935005005467372
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,13 +42,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 145391347181429553}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fbb40b3fa25c8d4d881a2e654a0ba93, type: 3}
+  m_Script: {fileID: 11500000, guid: b2f225875f066eb4a8af2f795d27d106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   chunk: {fileID: 8499612322962817664, guid: 7991e78c646b43a4cbe192920dc66c1f, type: 3}
-  ClusterDimension: 20
   pawnBehaviour: {fileID: 0}
---- !u!114 &223155826
+--- !u!114 &2044156449828890111
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,16 +56,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 145391347181429553}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce40ba5a89baa6245913662043bf2823, type: 3}
+  m_Script: {fileID: 11500000, guid: a3014045d61f6054eb8df7145c09cf94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPoints: 0
-  wallPoints: 1
-  pointsMultiplier: 1
-  startingSpeed: 15
-  deltaSpeed: 0.5
-  startingSpeedMultiplier: 1
---- !u!114 &375049377
+--- !u!114 &2648457096743081960
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,6 +68,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 145391347181429553}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 230cab56c13c17c4daab202d1c424875, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a8aa473675928e4db3633c12f7e227c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

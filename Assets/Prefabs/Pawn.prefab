@@ -471,7 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeTrigger: {fileID: 0}
+  volumeTrigger: {fileID: 2339644887246109454}
   volumeLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -580,10 +580,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8194631569264216600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25ac89285d889dd4e850df0e2dd2d9d0, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a4f667875c9dc945a5cac1ed300ce08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BGMaterial: {fileID: 2100000, guid: 0c1d22cbe5bd6e04f8076bf185c7c717, type: 2}
   parallaxFactor: 3
-  speed: 15
-  speedMultiplier: 1

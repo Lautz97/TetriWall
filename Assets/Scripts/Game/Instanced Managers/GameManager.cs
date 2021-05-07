@@ -2,15 +2,15 @@
 using UnityEngine;
 
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : MonoBehaviour
 {
     private Vector3 NextTileSpawn = Vector3.zero;
     [SerializeField] private GameObject chunk;
-    [SerializeField] private int ClusterDimension;
+    private int ClusterDimension;
     private Transform cluster;
     [SerializeField] private PawnBehaviour pawnBehaviour;
 
-    private int chunkRemaining = 999999;
+    private int chunkRemaining = int.MaxValue;
 
     private void OnEnable()
     {
@@ -49,7 +49,7 @@ public class GameManager : Singleton<GameManager>
     }
     private void InitStartingCluster()
     {
-        for (int i = 0; i < ClusterDimension; i++)
+        for (int i = 0; i < GamePlaySettings.initialClusterDimension; i++)
         {
             SpawnNextTile();
         }
@@ -61,7 +61,7 @@ public class GameManager : Singleton<GameManager>
         if (chunkRemaining > 0) chunkRemaining--;
         else
         {
-            chunkRemaining = GamePlaySettings.chunkDistance;
+            chunkRemaining = GamePlayCounters.actualChunkDistance;
             GameInstancesManager.ActivateWall(spawnedChunk.transform);
         }
     }
@@ -72,6 +72,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (!StateManager.isInitialized)
         {
+            DifficultyManager.Initialize();
             chunkRemaining = 0;
             NextPawn();
         }

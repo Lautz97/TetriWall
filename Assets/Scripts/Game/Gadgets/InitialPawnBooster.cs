@@ -11,7 +11,7 @@ public class InitialPawnBooster : MonoBehaviour
 
     private void Awake()
     {
-        targetSpeed = 15;
+        targetSpeed = GamePlaySettings.initialSpeed;
         boostSpeed = 65;
         brakeTime = 0.25f;
         zStart = transform.position.z;
@@ -19,16 +19,16 @@ public class InitialPawnBooster : MonoBehaviour
     private void FixedUpdate()
     {
         if (transform.position.z - zStart < 250)
-            PawnBehaviour.Instance.speed = targetSpeed + boostSpeed;
+            GamePlayCounters.actualSpeed = targetSpeed + boostSpeed;
         else
         {
-            if (PawnBehaviour.Instance.speed >= targetSpeed + 2)
+            if (GamePlayCounters.actualSpeed >= targetSpeed + 2)
             {
-                PawnBehaviour.Instance.speed -= Mathf.Lerp(targetSpeed + boostSpeed, targetSpeed, brakeTime);
+                GamePlayCounters.actualSpeed -= Mathf.Lerp(targetSpeed + boostSpeed, targetSpeed, brakeTime);
             }
             else
             {
-                PawnBehaviour.Instance.speed = targetSpeed;
+                GamePlayCounters.actualSpeed = targetSpeed;
                 Destroy(this);
             }
         }

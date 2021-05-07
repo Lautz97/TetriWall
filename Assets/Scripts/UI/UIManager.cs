@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class UIManager : Singleton<UIManager>
+public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject menuPanel, pausePanel, loadingPanel, gameloopPanel, gameoverPanel;
     private void OnEnable()

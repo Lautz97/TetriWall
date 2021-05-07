@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GameInstancesManager : Singleton<GameInstancesManager>
+public class GameInstancesManager : MonoBehaviour
 {
     private void OnEnable()
     {
