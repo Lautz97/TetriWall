@@ -49,28 +49,30 @@ public class SwipeDetector : MonoBehaviour
             }
             if (testInput)
             {
-                if (Input.GetKeyDown(KeyCode.Escape)) StateManager.UpdateState(StateManager.GetGameState == GameState.paused ? GameState.playing : GameState.paused);
+                float credibilityMultiplier = 999;// InputSettings.minSwipeDistance + InputSettings.maxTapDistance;
+
+                // if (Input.GetKeyDown(KeyCode.Escape)) StateManager.UpdateState(StateManager.GetGameState == GameState.paused ? GameState.playing : GameState.paused);
                 if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
                 {
-                    SetPositionAndTime(Vector2.left * InputSettings.minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.left * credibilityMultiplier, out downPosition, out downTime);
                     SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                     DetectSwipe();
                 }
                 if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
                 {
-                    SetPositionAndTime(Vector2.right * InputSettings.minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.right * credibilityMultiplier, out downPosition, out downTime);
                     SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                     DetectSwipe();
                 }
                 if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
                 {
-                    SetPositionAndTime(Vector2.up * InputSettings.minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.up * credibilityMultiplier, out downPosition, out downTime);
                     SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                     DetectSwipe();
                 }
                 if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
                 {
-                    SetPositionAndTime(Vector2.down * InputSettings.minSwipeDistance, out downPosition, out downTime);
+                    SetPositionAndTime(Vector2.down * credibilityMultiplier, out downPosition, out downTime);
                     SetPositionAndTime(Vector2.zero, out upPosition, out upTime);
                     DetectSwipe();
                 }
@@ -120,7 +122,7 @@ public class SwipeDetector : MonoBehaviour
 
     private bool maxSwipeTimeExceeded() => (downTime - upTime) > InputSettings.maxSwipeTime;
     private bool maxTapTimeExceeded() => (downTime - upTime) > InputSettings.maxTapTime;
-    private bool maxTapDistanceCheck() => (Math.Abs(VerticalMovement()) < InputSettings.maxTapDistance || Math.Abs(HorizontalMovement()) < InputSettings.maxTapDistance);
+    private bool maxTapDistanceCheck() => (Math.Abs(VerticalMovement()) < InputSettings.maxTapDistance && Math.Abs(HorizontalMovement()) < InputSettings.maxTapDistance);
     private bool minSwipeDistanceCheck() => (Math.Abs(VerticalMovement()) >= InputSettings.minSwipeDistance || Math.Abs(HorizontalMovement()) >= InputSettings.minSwipeDistance);
     private float VerticalMovement() => (downPosition.y - upPosition.y);
     private float HorizontalMovement() => (downPosition.x - upPosition.x);
