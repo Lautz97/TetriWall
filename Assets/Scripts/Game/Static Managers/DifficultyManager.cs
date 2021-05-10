@@ -5,6 +5,7 @@ public static class DifficultyManager
         GamePlayCounters.actualSpeedMultiplier = GamePlaySettings.initialSpeedMultiplier;
         GamePlayCounters.actualSpeed = GamePlaySettings.initialSpeed;
         GamePlayCounters.actualChunkDistance = GamePlaySettings.initialChunkDistance;
+        GamePlayCounters.actualDeltaSpeed = GamePlaySettings.initialdeltaSpeed;
         GamePlaySettings.onlyHorizontal = true;
     }
 
@@ -15,12 +16,12 @@ public static class DifficultyManager
 
     public static void IncreaseActualSpeed()
     {
-        GamePlayCounters.actualSpeed += GamePlaySettings.deltaSpeed;
+        GamePlayCounters.actualSpeed += GamePlayCounters.actualDeltaSpeed;
     }
 
     public static void DecreaseActualSpeed()
     {
-        GamePlayCounters.actualSpeed -= GamePlaySettings.deltaSpeed;
+        GamePlayCounters.actualSpeed -= GamePlayCounters.actualDeltaSpeed;
     }
 
     public static void IncreaseActualSpeedMultiplier()
@@ -31,6 +32,16 @@ public static class DifficultyManager
     public static void DecreaseActualSpeedMultiplier()
     {
         GamePlayCounters.actualSpeedMultiplier -= GamePlaySettings.deltaSpeedMultiplier;
+    }
+
+    public static void IncreaseDeltaSpeedMultiplier()
+    {
+        GamePlayCounters.actualDeltaSpeed *= 2;
+    }
+
+    public static void DecreaseDeltaSpeedMultiplier()
+    {
+        GamePlayCounters.actualDeltaSpeed /= 2;
     }
 
     public static void IncreaseChunkDistance()

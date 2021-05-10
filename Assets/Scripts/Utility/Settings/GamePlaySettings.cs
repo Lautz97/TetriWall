@@ -7,7 +7,7 @@ public static class GamePlaySettings
     public static int deltaChunkDistance = 1;
     // speed and multiplier
     public static float initialSpeed = 15;
-    public static float deltaSpeed = 0.1f;
+    public static float initialdeltaSpeed = 0.1f;
     public static float initialSpeedMultiplier = 1;
     public static float deltaSpeedMultiplier = 1;
     //score

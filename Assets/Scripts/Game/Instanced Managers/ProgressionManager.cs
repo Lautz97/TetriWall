@@ -54,7 +54,7 @@ public class ProgressionManager : MonoBehaviour
                         DifficultyManager.IncreaseChunkDistance();
                 }
 
-                if (GamePlayCounters.actualSpeed > 20 - 5 * GamePlayCounters.actualSpeedMultiplier)
+                if (GamePlayCounters.actualSpeed > 20 - 5 * GamePlayCounters.actualDeltaSpeed)
                 {
                     if (GamePlayCounters.actualChunkDistance < 4)
                     {
@@ -66,12 +66,12 @@ public class ProgressionManager : MonoBehaviour
                     if (level < 1)
                     {
                         level = 1;
-                        DifficultyManager.IncreaseActualSpeedMultiplier();
+                        DifficultyManager.IncreaseDeltaSpeedMultiplier();
                     }
                     DifficultyManager.IncreaseActualSpeed();
                 }
 
-                if (GamePlayCounters.actualSpeed > 60 - 5 * GamePlayCounters.actualSpeedMultiplier)
+                if (GamePlayCounters.actualSpeed > 60 - 5 * GamePlayCounters.actualDeltaSpeed)
                 {
                     if (GamePlayCounters.actualChunkDistance < 4)
                     {

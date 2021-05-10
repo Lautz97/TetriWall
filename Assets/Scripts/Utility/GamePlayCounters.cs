@@ -2,6 +2,7 @@ public static class GamePlayCounters
 {
     // speed
     public static float actualSpeed;
+    public static float actualDeltaSpeed;
     public static float actualSpeedMultiplier;
 
     // score
