@@ -8,7 +8,12 @@ public class PawnBehaviour : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        BGMaterial.mainTextureOffset = Vector2.zero;
+        ResetBg();
+    }
+
+    private void ResetBg()
+    {
+        BGMaterial.mainTextureOffset = Vector2.zero; 
     }
 
     // Update is called once per frame
@@ -20,11 +25,17 @@ public class PawnBehaviour : MonoBehaviour
     }
     private void OnEnable()
     {
+        StateManager.OnMainMenu += ResetBg;
+        StateManager.OnReset += ResetBg;
+
         StateManager.OnInitialize += AddBooster;
     }
 
     private void OnDisable()
     {
+        StateManager.OnMainMenu -= ResetBg;
+        StateManager.OnReset -= ResetBg;
+
         StateManager.OnInitialize -= AddBooster;
     }
 
