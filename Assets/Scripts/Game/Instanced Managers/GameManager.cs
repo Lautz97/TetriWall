@@ -21,7 +21,10 @@ public class GameManager : MonoBehaviour
 
         SwipeDetector.OnSwipe += SwipeDetected;
 
-        StateManager.OnPlay += StartSession;
+        StateManager.OnInitialize += StartSession;
+        StateManager.OnPause += Pause;
+        StateManager.OnResume += Resume;
+        StateManager.OnGameOver += GameOver;
     }
     private void OnDisable()
     {
@@ -32,7 +35,10 @@ public class GameManager : MonoBehaviour
 
         SwipeDetector.OnSwipe -= SwipeDetected;
 
-        StateManager.OnPlay -= StartSession;
+        StateManager.OnInitialize -= StartSession;
+        StateManager.OnPause -= Pause;
+        StateManager.OnResume -= Resume;
+        StateManager.OnGameOver -= GameOver;
     }
 
     // Start is called before the first frame update
@@ -70,13 +76,25 @@ public class GameManager : MonoBehaviour
 
     private void StartSession()
     {
-        if (!StateManager.isInitialized)
-        {
-            DifficultyManager.Initialize();
-            chunkRemaining = 0;
-            NextPawn();
-        }
+        TimeManager.InitTime();
+        DifficultyManager.Initialize();
+        chunkRemaining = 0;
+        NextPawn();
     }
+    private void Pause()
+    {
+        TimeManager.StopTime();
+    }
+    private void GameOver()
+    {
+        TimeManager.StopTime();
+    }
+    private void Resume()
+    {
+        TimeManager.ResumeTime();
+    }
+
+
     private void NextPawn()
     {
         StartCoroutine(SpawnNextPawn());
@@ -95,7 +113,7 @@ public class GameManager : MonoBehaviour
     }
     private void HitWallTriggered()
     {
-        StateManager.UpdateState(GameState.gameOver);
+        StateManager.GameOver();
     }
 
 

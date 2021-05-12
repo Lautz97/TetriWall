@@ -4,52 +4,49 @@ using UnityEngine.SceneManagement;
 
 public static class StateManager
 {
-    public static GameState GetGameState { private set; get; }
-    public static bool isInitialized = false;
+    public static State GetGameState { private set; get; }
 
-    public static Action OnMainMenu, OnPlay, OnPause, OnGameOver, OnReset;
+    public static Action OnMainMenu, OnInitialize, OnPause, OnResume, OnGameOver, OnReset;
 
-    public static void UpdateState(GameState nextState)
+    public static void MainMenu()
     {
-        GetGameState = nextState;
-        switch (GetGameState)
-        {
-            case GameState.mainMenu:
-                Time.timeScale = 0;
-                isInitialized = false;
-                OnMainMenu?.Invoke();
-                break;
-
-            case GameState.playing:
-                Time.timeScale = 1;
-                OnPlay?.Invoke();
-                isInitialized = true;
-                break;
-
-            case GameState.paused:
-                Time.timeScale = 0;
-                OnPause?.Invoke();
-                break;
-
-            case GameState.gameOver:
-                Time.timeScale = 1;
-                OnGameOver?.Invoke();
-                break;
-
-            case GameState.reset:
-                Time.timeScale = 1;
-                isInitialized = false;
-                SceneManager.LoadScene("GameLevel", LoadSceneMode.Single);
-                // OnReset?.Invoke();
-                break;
-
-            default:
-                break;
-        }
+        GetGameState = State.mainMenu;
+        OnMainMenu?.Invoke();
+    }
+    public static void Initialize()
+    {
+        GetGameState = State.initializing;
+        OnInitialize?.Invoke();
+    }
+    public static void Pause()
+    {
+        GetGameState = State.pausing;
+        OnPause?.Invoke();
+    }
+    public static void Resume()
+    {
+        GetGameState = State.resuming;
+        OnResume?.Invoke();
+    }
+    public static void GameOver()
+    {
+        GetGameState = State.gameover;
+        OnGameOver?.Invoke();
+    }
+    public static void Reset()
+    {
+        GetGameState = State.resetting;
+        OnReset?.Invoke();
+        //PROBLEM
+        SceneManager.LoadScene("GameLevel", LoadSceneMode.Single);
+    }
+    public static void Quit()
+    {
+        Application.Quit();
     }
 
 }
-public enum GameState
+public enum State
 {
-    mainMenu, playing, paused, gameOver, reset
+    mainMenu, initializing, pausing, resuming, gameover, resetting
 }

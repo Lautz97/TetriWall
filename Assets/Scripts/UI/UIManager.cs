@@ -8,16 +8,18 @@ public class UIManager : MonoBehaviour
         StateManager.OnGameOver += ActivateGameOver;
         StateManager.OnMainMenu += ActivateMainMenu;
         StateManager.OnPause += AcivatePause;
-        StateManager.OnPlay += ActivateGameLoop;
+        StateManager.OnResume += ActivateGameLoop;
+        StateManager.OnInitialize += ActivateGameLoop;
 
-        StateManager.UpdateState(GameState.mainMenu);
+        StateManager.MainMenu();
     }
     private void OnDisable()
     {
         StateManager.OnGameOver -= ActivateGameOver;
         StateManager.OnMainMenu -= ActivateMainMenu;
         StateManager.OnPause -= AcivatePause;
-        StateManager.OnPlay -= ActivateGameLoop;
+        StateManager.OnResume -= ActivateGameLoop;
+        StateManager.OnInitialize -= ActivateGameLoop;
     }
 
     private void DisableAllPanels()

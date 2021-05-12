@@ -1,19 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class PauseHUD : MonoBehaviour
 {
     public void ResumeGame()
     {
-        StateManager.UpdateState(GameState.playing);
+        StateManager.Resume();
     }
 
     public void QuitToMenu()
     {
         //TODO FIX THIS
-        StateManager.UpdateState(GameState.reset);
+        StateManager.Reset();
+    }
+
+    public void QuitGame()
+    {
+        // DONE for now
+        // se il gioco viene chiuso dal menu di pausa
+        // non far perdere i progressi al giocatore
+        // salvare punteggi etc
+        StateManager.Quit();
     }
 
     public void TestMenu()

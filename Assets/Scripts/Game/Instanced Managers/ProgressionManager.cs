@@ -11,75 +11,92 @@ public class ProgressionManager : MonoBehaviour
     {
         WallBehaviour.PassedCorrectly += WallPassed;
 
-        StateManager.OnPlay += Initialize;
+        StateManager.OnInitialize += Initialize;
         StateManager.OnGameOver += GameOver;
+        StateManager.OnReset += ResetGame;
     }
 
     private void OnDisable()
     {
         WallBehaviour.PassedCorrectly -= WallPassed;
 
-        StateManager.OnPlay -= Initialize;
+        StateManager.OnInitialize -= Initialize;
         StateManager.OnGameOver -= GameOver;
+        StateManager.OnReset -= ResetGame;
     }
 
 
     // if not initialized yet, this should prepare progression variables for a fully new game sessione
     private void Initialize()
     {
-        if (!StateManager.isInitialized)
-        {
-            DifficultyManager.Initialize();
-            ScoreManager.Initialize();
-            level = 0;
-        }
+        DifficultyManager.Initialize();
+        ScoreManager.Initialize();
+        level = 0;
     }
 
     // triggered by "Player Success"
     private void WallPassed()
     {
-        if (StateManager.GetGameState == GameState.playing)
+        if (!gameObject.GetComponent<InitialPawnBooster>())
         {
-            if (!gameObject.GetComponent<InitialPawnBooster>())
+
+            ScoreManager.AddPoints();
+
+            PointsUpdated?.Invoke();
+
+            if (GamePlayCounters.actualSpeed <= 20)
             {
+                DifficultyManager.IncreaseActualSpeed();
+                if (GamePlayCounters.actualChunkDistance < 3)
+                    DifficultyManager.IncreaseChunkDistance();
+            }
 
-                ScoreManager.AddPoints();
-
-                PointsUpdated?.Invoke();
-
-                if (GamePlayCounters.actualSpeed <= 20)
+            // if (GamePlayCounters.actualSpeed > 20 - 5 * GamePlayCounters.actualDeltaSpeed)
+            // {
+            //     if (GamePlayCounters.actualChunkDistance < 4)
+            //     {
+            //         DifficultyManager.IncreaseChunkDistance();
+            //     }
+            // }
+            if (GamePlayCounters.actualSpeed > 20 && GamePlayCounters.actualSpeed <= 30)
+            {
+                if (level < 1)
                 {
-                    DifficultyManager.IncreaseActualSpeed();
-                    if (GamePlayCounters.actualChunkDistance < 3)
-                        DifficultyManager.IncreaseChunkDistance();
+                    level = 1;
+                    DifficultyManager.IncreaseDeltaSpeedMultiplier();
                 }
+                DifficultyManager.IncreaseActualSpeed();
+            }
 
-                if (GamePlayCounters.actualSpeed > 20 - 5 * GamePlayCounters.actualDeltaSpeed)
+            if (GamePlayCounters.actualSpeed > 30 - 5 * GamePlayCounters.actualDeltaSpeed)
+            {
+                if (GamePlayCounters.actualChunkDistance < 4)
                 {
-                    if (GamePlayCounters.actualChunkDistance < 4)
-                    {
-                        DifficultyManager.IncreaseChunkDistance();
-                    }
+                    DifficultyManager.IncreaseChunkDistance();
                 }
-                if (GamePlayCounters.actualSpeed > 20 && GamePlayCounters.actualSpeed <= 40)
+            }
+            if (GamePlayCounters.actualSpeed > 30 && GamePlayCounters.actualSpeed <= 40)
+            {
+                if (level < 2)
                 {
-                    if (level < 1)
-                    {
-                        level = 1;
-                        DifficultyManager.IncreaseDeltaSpeedMultiplier();
-                    }
-                    DifficultyManager.IncreaseActualSpeed();
+                    level = 2;
+                    DifficultyManager.IncreaseDeltaSpeedMultiplier();
                 }
+                DifficultyManager.IncreaseActualSpeed();
+            }
 
-                if (GamePlayCounters.actualSpeed > 60 - 5 * GamePlayCounters.actualDeltaSpeed)
+            if (GamePlayCounters.actualSpeed > 60 - 5 * GamePlayCounters.actualDeltaSpeed)
+            {
+                if (GamePlayCounters.actualChunkDistance < 5)
                 {
-                    if (GamePlayCounters.actualChunkDistance < 4)
-                    {
-                        DifficultyManager.IncreaseChunkDistance();
-                    }
+                    DifficultyManager.IncreaseChunkDistance();
                 }
-                if (GamePlayCounters.actualSpeed > 60 && GamePlayCounters.actualChunkDistance < 5)
+            }
+            if (GamePlayCounters.actualSpeed > 60)
+            {
+                if (level < 3)
                 {
+                    level = 3;
                     DifficultyManager.EnableVerticalMovement();
                 }
             }
@@ -89,17 +106,14 @@ public class ProgressionManager : MonoBehaviour
     // triggered by "Player Error"
     private void GameOver()
     {
-        if (StateManager.isInitialized)
-        {
-            if (StateManager.GetGameState == GameState.gameOver)
-            {
-                ScoreManager.SaveScoring();
-                ScoreManager.ResetCurrentScore();
-                ScoreManager.ResetScoreMultiplier();
+        ScoreManager.SaveScoring();
 
-                PointsUpdated?.Invoke();
-            }
-            StateManager.UpdateState(GameState.reset);
-        }
+        PointsUpdated?.Invoke();
+    }
+
+    private void ResetGame()
+    {
+        ScoreManager.ResetCurrentScore();
+        ScoreManager.ResetScoreMultiplier();
     }
 }

@@ -4,7 +4,11 @@ public class MainMenuHUD : MonoBehaviour
 {
     public void Play()
     {
-        StateManager.UpdateState(GameState.playing);
+        StateManager.Initialize();
+    }
+
+    public void Quit(){
+        StateManager.Quit();
     }
 
 }

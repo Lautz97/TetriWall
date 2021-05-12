@@ -20,17 +20,18 @@ public class PawnBehaviour : MonoBehaviour
     }
     private void OnEnable()
     {
-        StateManager.OnPlay += AddBooster;
+        StateManager.OnInitialize += AddBooster;
     }
 
     private void OnDisable()
     {
-        StateManager.OnPlay -= AddBooster;
+        StateManager.OnInitialize -= AddBooster;
     }
 
     void AddBooster()
     {
-        if (!StateManager.isInitialized)
+        gameObject.TryGetComponent<InitialPawnBooster>(out InitialPawnBooster gadget);
+        if (!gadget)
             gameObject.AddComponent<InitialPawnBooster>();
     }
 }

@@ -24,6 +24,6 @@ public class GameLoopHUD : MonoBehaviour
 
     public void Pause()
     {
-        StateManager.UpdateState(GameState.paused);
+        StateManager.Pause();
     }
 }
