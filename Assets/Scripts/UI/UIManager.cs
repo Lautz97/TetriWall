@@ -55,4 +55,6 @@ public class UIManager : MonoBehaviour
         loadingPanel.SetActive(true);
     }
 
+    
+
 }

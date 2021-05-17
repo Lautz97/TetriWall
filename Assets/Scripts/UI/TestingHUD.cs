@@ -12,7 +12,7 @@ public class TestingHUD : MonoBehaviour
     {
         testingPanel.SetActive(true);
         minSwipeText.text = InputSettings.minSwipeDistance.ToString();
-        contInputText.text = (!InputSettings.detectOnlyAfterRelease).ToString();
+        contInputText.text = (!InputSettings.discreteInputCheck).ToString();
         onlyHorizontalText.text = (GamePlaySettings.onlyHorizontal).ToString();
     }
     private void OnDisable()
@@ -27,8 +27,8 @@ public class TestingHUD : MonoBehaviour
 
     public void UpdateContinuousDetection()
     {
-        InputSettings.detectOnlyAfterRelease = !InputSettings.detectOnlyAfterRelease;
-        contInputText.text = (!InputSettings.detectOnlyAfterRelease).ToString();
+        InputSettings.discreteInputCheck = !InputSettings.discreteInputCheck;
+        contInputText.text = (!InputSettings.discreteInputCheck).ToString();
     }
 
     public void UpdateOnlyHorizontal()

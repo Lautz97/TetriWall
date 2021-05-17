@@ -27,7 +27,7 @@ public class SwipeDetector : MonoBehaviour
                 SetPositionAndTime(t.position, out downPosition, out downTime);
                 SetPositionAndTime(t.position, out upPosition, out upTime);
             }
-            if (!InputSettings.detectOnlyAfterRelease && (t.phase == TouchPhase.Moved || t.phase == TouchPhase.Stationary))
+            if (!InputSettings.discreteInputCheck && (t.phase == TouchPhase.Moved || t.phase == TouchPhase.Stationary))
             {
                 SetPositionAndTime(t.position, out downPosition, out downTime);
                 if (minSwipeDistanceCheck())

@@ -7,8 +7,17 @@ public class MainMenuHUD : MonoBehaviour
         StateManager.Initialize();
     }
 
-    public void Quit(){
+    public void Quit()
+    {
         StateManager.Quit();
+    }
+
+
+    [SerializeField] GameObject SettingsPanel;
+    public void Settings()
+    {
+        SettingsPanel.SetActive(true);
+        gameObject.SetActive(false);
     }
 
 }
