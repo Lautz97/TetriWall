@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
 
+    string _musicVolume = "MusicVolume", _effectsVolume = "EffectsVolume", _masterVolume = "MasterVolume", _musicPitch = "MusicPitch";
     [SerializeField] AudioSource MusicSource, EffectsSource;
     [SerializeField] AudioMixer MusicMixer, EffectsMixer, MasterMixer;
+    private float _multiplier = 30f;
 
     private void OnEnable()
     {
@@ -22,7 +22,6 @@ public class AudioManager : MonoBehaviour
     }
     private void UpdateVolume()
     {
-
+        MasterMixer.SetFloat(_masterVolume, Mathf.Log10(AudioSettings.CurrentMasterVolume) * _multiplier);
     }
-
 }

@@ -5,16 +5,19 @@ using UnityEngine.UI;
 
 public class SettingsHUD : MonoBehaviour
 {
+    private bool protectedChange = false;
+
+
     [SerializeField] GameObject MenuPanel;
     [SerializeField] Button ResetScoreBtn;
     [SerializeField] Button ContinuousInputBtn, DiscreteInputBtn;
+    [SerializeField] TMP_Text MasterVolumeText, MusicVolumeText, EffectsVolumeText;
     [SerializeField] Slider MasterVolumeSlider, MusicVolumeSlider, EffectsVolumeSlider;
     [SerializeField] Button ShowTutorialBtn, HideTutorialBtn;
     [SerializeField] GameObject GameplayTab, AudioTab;
     [SerializeField] GameObject OpenGameplayTabBtn, OpenAudioTabBtn;
-    private void Awake()
+    private void Start()
     {
-        ResetScoreBtn.interactable = (SaveLoad.LoadHiScore() > 0);
         ButtonsCheck();
     }
 
@@ -39,6 +42,8 @@ public class SettingsHUD : MonoBehaviour
         SettingsManager.OnVolumeChanged += ButtonsCheck;
         SettingsManager.OnTutorialChanged += ButtonsCheck;
         SettingsManager.OnSongChanged += ButtonsCheck;
+
+        ButtonsCheck();
     }
 
     private void OnDisable()
@@ -102,8 +107,14 @@ public class SettingsHUD : MonoBehaviour
 
     public void ChangeVolume()
     {
-        VolumeSlidersCheck();
-        Debug.Log("method not yet implemented");
+        if (!protectedChange)
+        {
+            AudioSettings.CurrentMasterVolume = MasterVolumeSlider.value;
+            AudioSettings.CurrentMusicVolume = MusicVolumeSlider.value;
+            AudioSettings.CurrentEffectsVolume = EffectsVolumeSlider.value;
+            SettingsManager.OnVolumeChangeRequest?.Invoke();
+            VolumeSlidersCheck();
+        }
     }
 
     public void ChangeTutorial()
@@ -123,14 +134,17 @@ public class SettingsHUD : MonoBehaviour
     {
         InputButtonsCheck();
         HiScoreButtonCheck();
-        VolumeSlidersCheck();
+
+        // VolumeSlidersCheck();
+        SettingsManager.OnVolumeChanged?.Invoke();
+
         SongButtonsCheck();
         TutorialButtonsCheck();
     }
 
     private void InputButtonsCheck()
     {
-        if (InputSettings.discreteInputCheck)
+        if (!InputSettings.discreteInputCheck)
         {
             DiscreteInputBtn.interactable = true;
             ContinuousInputBtn.interactable = false;
@@ -149,7 +163,18 @@ public class SettingsHUD : MonoBehaviour
 
     private void VolumeSlidersCheck()
     {
-        Debug.Log("method not yet implemented");
+        protectedChange = true;
+
+        MasterVolumeSlider.value = AudioSettings.CurrentMasterVolume;
+        MasterVolumeText.text = "Master Volume: " + Mathf.RoundToInt(AudioSettings.CurrentMasterVolume * 100);
+
+        MusicVolumeSlider.value = AudioSettings.CurrentMusicVolume;
+        MusicVolumeText.text = "Music Volume: " + Mathf.RoundToInt(AudioSettings.CurrentMusicVolume * 100);
+
+        EffectsVolumeSlider.value = AudioSettings.CurrentEffectsVolume;
+        EffectsVolumeText.text = "Effects Volume: " + Mathf.RoundToInt(AudioSettings.CurrentEffectsVolume * 100);
+
+        protectedChange = false;
     }
 
     private void SongButtonsCheck()

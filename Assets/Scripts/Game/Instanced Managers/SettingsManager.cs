@@ -11,6 +11,8 @@ public class SettingsManager : MonoBehaviour
                         OnTutorialChangeRequest, OnTutorialChanged;
     private void OnEnable()
     {
+        RecallSaved();
+
         StateManager.OnMainMenu += RecallSaved;
         StateManager.OnReset += RecallSaved;
 
@@ -111,20 +113,21 @@ public class SettingsManager : MonoBehaviour
 
     private void RecallVolume()
     {
-        AudioSettings.CurrentMasterVolume =
-            (SaveLoad.HasSetting(SaveLoadSettings.masterVolumeFloat)) ?
-                SaveLoad.LoadFloatSettingsManually(SaveLoadSettings.masterVolumeFloat) :
-                AudioSettings.DEFAULT_MasterVolume;
+        if (SaveLoad.HasSetting(SaveLoadSettings.masterVolumeFloat))
+            AudioSettings.CurrentMasterVolume = SaveLoad.LoadFloatSettingsManually(SaveLoadSettings.masterVolumeFloat);
+        else
+            AudioSettings.CurrentMasterVolume = AudioSettings.DEFAULT_MasterVolume;
 
-        AudioSettings.CurrentMusicVolume =
-            (SaveLoad.HasSetting(SaveLoadSettings.musicVolumeFloat)) ?
-                SaveLoad.LoadFloatSettingsManually(SaveLoadSettings.musicVolumeFloat) :
-                AudioSettings.DEFAULT_MusicVolume;
+        if (SaveLoad.HasSetting(SaveLoadSettings.musicVolumeFloat))
+            AudioSettings.CurrentMusicVolume = SaveLoad.LoadFloatSettingsManually(SaveLoadSettings.musicVolumeFloat);
+        else
+            AudioSettings.CurrentMusicVolume = AudioSettings.DEFAULT_MusicVolume;
 
-        AudioSettings.CurrentEffectsVolume =
-            (SaveLoad.HasSetting(SaveLoadSettings.effectsVolumeFloat)) ?
-                SaveLoad.LoadFloatSettingsManually(SaveLoadSettings.effectsVolumeFloat) :
-                AudioSettings.DEFAULT_EffectsVolume;
+        if (SaveLoad.HasSetting(SaveLoadSettings.effectsVolumeFloat))
+            AudioSettings.CurrentEffectsVolume = SaveLoad.LoadFloatSettingsManually(SaveLoadSettings.effectsVolumeFloat);
+        else
+            AudioSettings.CurrentEffectsVolume = AudioSettings.DEFAULT_EffectsVolume;
+
         VolumeChanged();
     }
 
@@ -143,7 +146,9 @@ public class SettingsManager : MonoBehaviour
     private void VolumeChanged()
     {
         SaveLoad.SaveFloatSettingsManually(SaveLoadSettings.masterVolumeFloat, AudioSettings.CurrentMasterVolume);
+
         SaveLoad.SaveFloatSettingsManually(SaveLoadSettings.musicVolumeFloat, AudioSettings.CurrentMusicVolume);
+
         SaveLoad.SaveFloatSettingsManually(SaveLoadSettings.effectsVolumeFloat, AudioSettings.CurrentEffectsVolume);
 
         OnVolumeChanged?.Invoke();
