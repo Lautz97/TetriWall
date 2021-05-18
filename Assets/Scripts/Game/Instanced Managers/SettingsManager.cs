@@ -13,8 +13,7 @@ public class SettingsManager : MonoBehaviour
     {
         RecallSaved();
 
-        StateManager.OnMainMenu += RecallSaved;
-        StateManager.OnReset += RecallSaved;
+        StateManager.OnLoading += RecallSaved;
 
         OnInputSettingsChangeRequest += ChangeInputSystem;
         OnTutorialChangeRequest += ChangeTutorial;
@@ -27,8 +26,7 @@ public class SettingsManager : MonoBehaviour
 
     private void OnDisable()
     {
-        StateManager.OnMainMenu -= RecallSaved;
-        StateManager.OnReset -= RecallSaved;
+        StateManager.OnLoading -= RecallSaved;
 
         OnInputSettingsChangeRequest -= ChangeInputSystem;
         OnTutorialChangeRequest -= ChangeTutorial;
@@ -77,38 +75,38 @@ public class SettingsManager : MonoBehaviour
 
     private void RecallTutorial()
     {
-        Debug.Log("method not yet implemented");
-        OnTutorialChanged?.Invoke();
+        // Debug.Log("method not yet implemented");
+        //OnTutorialChanged?.Invoke();
     }
 
     private void ResetTutorial()
     {
-        Debug.Log("method not yet implemented");
-        OnTutorialChanged?.Invoke();
+        // Debug.Log("method not yet implemented");
+        //OnTutorialChanged?.Invoke();
     }
 
     private void ChangeTutorial()
     {
-        Debug.Log("method not yet implemented");
-        OnTutorialChanged?.Invoke();
+        // Debug.Log("method not yet implemented");
+        //OnTutorialChanged?.Invoke();
     }
 
     private void RecallSong()
     {
-        Debug.Log("method not yet implemented");
-        OnSongChanged?.Invoke();
+        // Debug.Log("method not yet implemented");
+        //OnSongChanged?.Invoke();
     }
 
     private void ResetSong()
     {
-        Debug.Log("method not yet implemented");
-        OnSongChanged?.Invoke();
+        // Debug.Log("method not yet implemented");
+        //OnSongChanged?.Invoke();
     }
 
     private void SongChanged()
     {
-        Debug.Log("method not yet implemented");
-        OnSongChanged?.Invoke();
+        // Debug.Log("method not yet implemented");
+        //OnSongChanged?.Invoke();
     }
 
     private void RecallVolume()

@@ -38,7 +38,7 @@ public class SwipeDetector : MonoBehaviour
             if (t.phase == TouchPhase.Ended || t.phase == TouchPhase.Canceled)
             {
                 SetPositionAndTime(t.position, out downPosition, out downTime);
-                if (!minSwipeDistanceCheck() && lastPhase == TouchPhase.Began)
+                if ((!minSwipeDistanceCheck() && lastPhase == TouchPhase.Began) || InputSettings.discreteInputCheck)
                 {
                     DetectSwipe();
                 }
@@ -114,7 +114,10 @@ public class SwipeDetector : MonoBehaviour
             StartPosition = downPosition,
             EndPosition = upPosition
         };
-        OnSwipe?.Invoke(swipe);
+        if (StateManager.GetGameState == State.resuming || StateManager.GetGameState == State.initializing)
+        {
+            OnSwipe?.Invoke(swipe);
+        }
     }
 
     private bool maxSwipeTimeExceeded() => (downTime - upTime) > InputSettings.maxSwipeTime;

@@ -2,6 +2,17 @@
 
 public class PauseHUD : MonoBehaviour
 {
+    [SerializeField] private GameObject InputMan;
+    private void OnEnable()
+    {
+        InputMan.SetActive(false);
+    }
+    private void OnDisable()
+    {
+        InputMan.SetActive(true);
+    }
+
+
     public void ResumeGame()
     {
         StateManager.Resume();

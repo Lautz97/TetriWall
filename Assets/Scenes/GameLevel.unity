@@ -3745,7 +3745,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 22662892}
   m_HandleRect: {fileID: 22662891}
   m_Direction: 2
-  m_Value: 0.9999995
+  m_Value: 1.0000005
   m_Size: 0.802449
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -6203,8 +6203,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 7092026767865512279, guid: de92b550014cbc94c97294aea7b7040f,
     type: 2}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 52d4e08e09326d543a56c355af7242db, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -7722,7 +7722,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00012207031}
+  m_AnchoredPosition: {x: 0, y: -0.00012207031}
   m_SizeDelta: {x: 950, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1127506724
@@ -8000,6 +8000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 325ba6b260ae6ba4392b450d4cba604a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InputMan: {fileID: 1465171367}
 --- !u!114 &1132017058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8217,7 +8218,7 @@ Canvas:
   m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
-  m_PixelPerfect: 1
+  m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -8398,7 +8399,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 2c0b0a6bbf9df8c4186869e765196497,
     type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -11944,7 +11945,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3.1722412, y: -884.9099}
+  m_AnchoredPosition: {x: -3.1721191, y: -884.9099}
   m_SizeDelta: {x: -500, y: 150}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1657691185
@@ -14726,6 +14727,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 852607977, guid: ab8d9eb838153eb4a9b2473498a21648, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 341557646478960912, guid: ab8d9eb838153eb4a9b2473498a21648,
         type: 3}
       propertyPath: m_RootOrder
@@ -14780,6 +14785,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2339644887246109457, guid: ab8d9eb838153eb4a9b2473498a21648,
+        type: 3}
+      propertyPath: m_TargetEye
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8194631569264216600, guid: ab8d9eb838153eb4a9b2473498a21648,
         type: 3}

@@ -31,28 +31,31 @@ public class SettingsHUD : MonoBehaviour
 
     private void OnEnable()
     {
+        CloseTabs();
+
+        SettingsManager.OnInputSettingsChanged += InputButtonsCheck;
+        SettingsManager.OnSettingsResetted += ButtonsCheck;
+        SettingsManager.OnVolumeChanged += VolumeSlidersCheck;
+        SettingsManager.OnTutorialChanged += TutorialButtonsCheck;
+        SettingsManager.OnSongChanged += SongButtonsCheck;
+    }
+
+    private void OnDisable()
+    {
+        SettingsManager.OnInputSettingsChanged -= InputButtonsCheck;
+        SettingsManager.OnSettingsResetted -= ButtonsCheck;
+        SettingsManager.OnVolumeChanged -= VolumeSlidersCheck;
+        SettingsManager.OnTutorialChanged -= TutorialButtonsCheck;
+        SettingsManager.OnSongChanged -= SongButtonsCheck;
+    }
+
+    private void CloseTabs()
+    {
         AudioTab.SetActive(false);
         OpenAudioTabBtn.SetActive(true);
 
         GameplayTab.SetActive(false);
         OpenGameplayTabBtn.SetActive(true);
-
-        SettingsManager.OnInputSettingsChanged += ButtonsCheck;
-        SettingsManager.OnSettingsResetted += ButtonsCheck;
-        SettingsManager.OnVolumeChanged += ButtonsCheck;
-        SettingsManager.OnTutorialChanged += ButtonsCheck;
-        SettingsManager.OnSongChanged += ButtonsCheck;
-
-        ButtonsCheck();
-    }
-
-    private void OnDisable()
-    {
-        SettingsManager.OnInputSettingsChanged -= ButtonsCheck;
-        SettingsManager.OnSettingsResetted -= ButtonsCheck;
-        SettingsManager.OnVolumeChanged -= ButtonsCheck;
-        SettingsManager.OnTutorialChanged -= ButtonsCheck;
-        SettingsManager.OnSongChanged -= ButtonsCheck;
     }
 
     public void ToggleAudioSettingsTab()
@@ -90,19 +93,17 @@ public class SettingsHUD : MonoBehaviour
     public void ResetHiScore()
     {
         SaveLoad.ResetHiScore();
-        ButtonsCheck();
+        HiScoreButtonCheck();
     }
 
     public void ResetSettings()
     {
         SettingsManager.OnSettingsResetRequest?.Invoke();
-        ButtonsCheck();
     }
 
     public void ChangeInputSystem()
     {
         SettingsManager.OnInputSettingsChangeRequest?.Invoke();
-        ButtonsCheck();
     }
 
     public void ChangeVolume()
@@ -113,20 +114,19 @@ public class SettingsHUD : MonoBehaviour
             AudioSettings.CurrentMusicVolume = MusicVolumeSlider.value;
             AudioSettings.CurrentEffectsVolume = EffectsVolumeSlider.value;
             SettingsManager.OnVolumeChangeRequest?.Invoke();
-            VolumeSlidersCheck();
         }
     }
 
     public void ChangeTutorial()
     {
         TutorialButtonsCheck();
-        Debug.Log("method not yet implemented");
+        // Debug.Log("method not yet implemented");
     }
 
     public void ChangeSong()
     {
         SongButtonsCheck();
-        Debug.Log("method not yet implemented");
+        // Debug.Log("method not yet implemented");
     }
 
 
@@ -135,8 +135,8 @@ public class SettingsHUD : MonoBehaviour
         InputButtonsCheck();
         HiScoreButtonCheck();
 
-        // VolumeSlidersCheck();
-        SettingsManager.OnVolumeChanged?.Invoke();
+        VolumeSlidersCheck();
+        // SettingsManager.OnVolumeChanged?.Invoke();
 
         SongButtonsCheck();
         TutorialButtonsCheck();
@@ -179,11 +179,11 @@ public class SettingsHUD : MonoBehaviour
 
     private void SongButtonsCheck()
     {
-        Debug.Log("method not yet implemented");
+        // Debug.Log("method not yet implemented");
     }
 
     private void TutorialButtonsCheck()
     {
-        Debug.Log("method not yet implemented");
+        // Debug.Log("method not yet implemented");
     }
 }

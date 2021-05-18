@@ -1,5 +1,5 @@
 using UnityEngine;
-public class Utils : MonoBehaviour
+public static class Utils
 {
     public static Vector3 Screen2World(Camera camera, Vector3 position)
     {

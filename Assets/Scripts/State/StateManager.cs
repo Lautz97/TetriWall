@@ -6,10 +6,16 @@ public static class StateManager
 {
     public static State GetGameState { private set; get; }
 
-    public static Action OnMainMenu, OnInitialize, OnPause, OnResume, OnGameOver, OnReset;
+    public static Action OnMainMenu, OnInitialize, OnPause, OnResume, OnGameOver, OnReset, OnLoading;
 
+    public static void Loading()
+    {
+        GetGameState = State.loading;
+        OnLoading?.Invoke();
+    }
     public static void MainMenu()
     {
+        Loading();
         GetGameState = State.mainMenu;
         OnMainMenu?.Invoke();
     }
@@ -48,5 +54,5 @@ public static class StateManager
 }
 public enum State
 {
-    mainMenu, initializing, pausing, resuming, gameover, resetting
+    mainMenu, initializing, pausing, resuming, gameover, resetting, loading
 }

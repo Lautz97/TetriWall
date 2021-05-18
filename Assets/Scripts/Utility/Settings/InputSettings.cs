@@ -2,12 +2,12 @@ public static class InputSettings
 {
     //
     public const float DEFAULT_maxTapDistance_continuous = 0.5f;
-    public const float DEFAULT_maxTapDistance_discrete = 5f;
+    public const float DEFAULT_maxTapDistance_discrete = 10f;
     public static float maxTapDistance = 0.5f;
 
     //
     public const float DEFAULT_minSwipeDistance_continuous = 50f;
-    public const float DEFAULT_minSwipeDistance_discrete = 50f;
+    public const float DEFAULT_minSwipeDistance_discrete = 75f;
     public static float minSwipeDistance = 50f;
 
     //
