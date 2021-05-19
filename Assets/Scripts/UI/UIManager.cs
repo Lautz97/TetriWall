@@ -5,6 +5,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject menuPanel, pausePanel, loadingPanel, gameloopPanel, gameoverPanel;
     private void OnEnable()
     {
+        StateManager.OnLoading += ActivateLoading;
         StateManager.OnGameOver += ActivateGameOver;
         StateManager.OnMainMenu += ActivateMainMenu;
         StateManager.OnPause += AcivatePause;
@@ -15,6 +16,7 @@ public class UIManager : MonoBehaviour
     }
     private void OnDisable()
     {
+        StateManager.OnLoading -= ActivateLoading;
         StateManager.OnGameOver -= ActivateGameOver;
         StateManager.OnMainMenu -= ActivateMainMenu;
         StateManager.OnPause -= AcivatePause;
@@ -55,6 +57,6 @@ public class UIManager : MonoBehaviour
         loadingPanel.SetActive(true);
     }
 
-    
+
 
 }

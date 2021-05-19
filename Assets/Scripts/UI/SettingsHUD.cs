@@ -16,6 +16,7 @@ public class SettingsHUD : MonoBehaviour
     [SerializeField] Button ShowTutorialBtn, HideTutorialBtn;
     [SerializeField] GameObject GameplayTab, AudioTab;
     [SerializeField] GameObject OpenGameplayTabBtn, OpenAudioTabBtn;
+
     private void Start()
     {
         ButtonsCheck();
@@ -33,8 +34,8 @@ public class SettingsHUD : MonoBehaviour
     {
         CloseTabs();
 
-        SettingsManager.OnInputSettingsChanged += InputButtonsCheck;
         SettingsManager.OnSettingsResetted += ButtonsCheck;
+        SettingsManager.OnInputSettingsChanged += InputButtonsCheck;
         SettingsManager.OnVolumeChanged += VolumeSlidersCheck;
         SettingsManager.OnTutorialChanged += TutorialButtonsCheck;
         SettingsManager.OnSongChanged += SongButtonsCheck;
