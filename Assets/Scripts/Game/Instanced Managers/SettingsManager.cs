@@ -135,8 +135,6 @@ public class SettingsManager : MonoBehaviour
         AudioSettings.CurrentMusicVolume = AudioSettings.DEFAULT_MusicVolume;
         AudioSettings.CurrentEffectsVolume = AudioSettings.DEFAULT_EffectsVolume;
 
-        AudioSettings.InitialPitch = AudioSettings.DEFAULT_InitialPitch;
-        AudioSettings.InitialDeltaPitch = AudioSettings.DEFAULT_InitialDeltaPitch;
         VolumeChanged();
     }
 

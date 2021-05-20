@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class ProgressionManager : MonoBehaviour
 {
     public static System.Action PointsUpdated;
+    public static System.Action<int> OnLevelRaise;
 
     private int level = 0;
 
@@ -64,6 +65,7 @@ public class ProgressionManager : MonoBehaviour
                 {
                     level = 1;
                     DifficultyManager.IncreaseDeltaSpeedMultiplier();
+                    OnLevelRaise?.Invoke(level);
                 }
                 DifficultyManager.IncreaseActualSpeed();
             }
@@ -81,6 +83,7 @@ public class ProgressionManager : MonoBehaviour
                 {
                     level = 2;
                     DifficultyManager.IncreaseDeltaSpeedMultiplier();
+                    OnLevelRaise?.Invoke(level);
                 }
                 DifficultyManager.IncreaseActualSpeed();
             }
@@ -98,6 +101,7 @@ public class ProgressionManager : MonoBehaviour
                 {
                     level = 3;
                     DifficultyManager.EnableVerticalMovement();
+                    OnLevelRaise?.Invoke(level);
                 }
             }
         }

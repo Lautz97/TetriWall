@@ -8,9 +8,9 @@
     public static float CurrentEffectsVolume = DEFAULT_EffectsVolume;
 
     public const float DEFAULT_InitialPitch = 1.0f;
-    public static float InitialPitch;
-    public const float DEFAULT_InitialDeltaPitch = 0.005f;
-    public static float InitialDeltaPitch;
+    public static float InitialPitch = DEFAULT_InitialPitch;
+    public const float DEFAULT_InitialDeltaPitch = 0.00025f;
+    public static float InitialDeltaPitch = DEFAULT_InitialDeltaPitch;
 
     public static float CurrentPitch;
     public static float CurrentDeltaPitch;

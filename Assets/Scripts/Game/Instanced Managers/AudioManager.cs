@@ -7,11 +7,11 @@ public class AudioManager : MonoBehaviour
     string _musicVolume = "MusicVolume", _effectsVolume = "EffectsVolume", _masterVolume = "MasterVolume", _musicPitch = "MusicPitch";
     [SerializeField]
     AudioSource musicSource, menuSource, pauseSource, gameOverSource,
-                                btnSource, inputSource;
+                                btnSource, inputSource, wallSource;
     [SerializeField] AudioMixer masterMixer;/*MusicMixer, EffectsMixer, */
     private float _multiplier = 30f;
 
-    [SerializeField] AudioClip buttonClip = null, swipeClip = null, tapClip = null;
+    [SerializeField] AudioClip buttonClip = null, swipeClip = null, tapClip = null, wallPassedClip = null, wallCollidedClip = null;
     [SerializeField] AudioClip bgmClip = null, menuClip = null, gameOverClip = null, pauseClip = null;
 
 
@@ -31,6 +31,11 @@ public class AudioManager : MonoBehaviour
         StateManager.OnPause += PlayPauseMusic;
         StateManager.OnResume += PlayGameMusic;
 
+        WallBehaviour.PassedCorrectly += WallPassed;
+        WallBehaviour.PassedWrongly += WallCollided;
+
+        ProgressionManager.OnLevelRaise += NextLevel;
+
         PlayMenuMusic();
     }
 
@@ -48,6 +53,11 @@ public class AudioManager : MonoBehaviour
         StateManager.OnGameOver -= PlayGameOverMusic;
         StateManager.OnPause -= PlayPauseMusic;
         StateManager.OnResume -= PlayGameMusic;
+
+        WallBehaviour.PassedCorrectly -= WallPassed;
+        WallBehaviour.PassedWrongly -= WallCollided;
+
+        ProgressionManager.OnLevelRaise -= NextLevel;
     }
     private void UpdateVolume()
     {
@@ -58,6 +68,7 @@ public class AudioManager : MonoBehaviour
 
     private void PauseAll()
     {
+        masterMixer.SetFloat(_musicPitch, AudioSettings.InitialPitch);
         if (musicSource.isPlaying) musicSource.Pause();
         if (menuSource.isPlaying) menuSource.Pause();
         if (pauseSource.isPlaying) pauseSource.Pause();
@@ -83,6 +94,8 @@ public class AudioManager : MonoBehaviour
     {
         if (StateManager.GetGameState == State.mainMenu)
         {
+            AudioSettings.CurrentPitch = AudioSettings.InitialPitch;
+            AudioSettings.CurrentDeltaPitch = AudioSettings.InitialDeltaPitch;
             PauseAll();
             if (menuClip != null && menuSource.clip != menuClip)
             {
@@ -114,6 +127,8 @@ public class AudioManager : MonoBehaviour
 
     private void PlayGameOverMusic()
     {
+        AudioSettings.CurrentPitch = AudioSettings.InitialPitch;
+        AudioSettings.CurrentDeltaPitch = AudioSettings.InitialDeltaPitch;
         PauseAll();
         if (gameOverClip != null && gameOverSource.clip != gameOverClip)
         {
@@ -146,6 +161,38 @@ public class AudioManager : MonoBehaviour
         else
         {
             inputSource.PlayOneShot(swipeClip);
+        }
+    }
+
+    private void WallPassed()
+    {
+        AudioClip fx = wallPassedClip;
+        if (fx != null)
+        {
+            wallSource.PlayOneShot(fx);
+        }
+        masterMixer.GetFloat(_musicPitch, out float p);
+        AudioSettings.CurrentPitch = (AudioSettings.CurrentPitch + AudioSettings.CurrentDeltaPitch);
+        Debug.Log(AudioSettings.CurrentPitch);
+        masterMixer.SetFloat(_musicPitch, p * AudioSettings.CurrentPitch);
+    }
+
+    private void WallCollided()
+    {
+        AudioClip fx = wallCollidedClip;
+        if (fx != null)
+        {
+            wallSource.PlayOneShot(fx);
+        }
+        masterMixer.SetFloat(_musicPitch, AudioSettings.InitialPitch);
+    }
+
+    private void NextLevel(int l)
+    {
+        AudioSettings.CurrentDeltaPitch *= 2;
+        if (l == 3)
+        {
+            AudioSettings.CurrentDeltaPitch = 0;
         }
     }
 
