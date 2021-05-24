@@ -28,7 +28,7 @@ public class PauseHUD : MonoBehaviour
     }
     private void OnDisable()
     {
-        InputMan.SetActive(true);
+        if (InputMan) InputMan.SetActive(true);
 
         SettingsManager.OnInputSettingsChanged -= InputButtonsCheck;
         SettingsManager.OnVolumeChanged -= VolumeSlidersCheck;

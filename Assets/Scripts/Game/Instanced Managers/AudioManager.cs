@@ -173,7 +173,6 @@ public class AudioManager : MonoBehaviour
         }
         masterMixer.GetFloat(_musicPitch, out float p);
         AudioSettings.CurrentPitch = (AudioSettings.CurrentPitch + AudioSettings.CurrentDeltaPitch);
-        Debug.Log(AudioSettings.CurrentPitch);
         masterMixer.SetFloat(_musicPitch, p * AudioSettings.CurrentPitch);
     }
 

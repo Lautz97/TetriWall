@@ -5,6 +5,8 @@ public class PawnBehaviour : MonoBehaviour
     [SerializeField] private Material BGMaterial;
     [SerializeField] private float parallaxFactor = 1;
 
+    [SerializeField] private GameObject tutorialPanel;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -13,7 +15,7 @@ public class PawnBehaviour : MonoBehaviour
 
     private void ResetBg()
     {
-        BGMaterial.mainTextureOffset = Vector2.zero; 
+        BGMaterial.mainTextureOffset = Vector2.zero;
     }
 
     // Update is called once per frame
@@ -43,6 +45,7 @@ public class PawnBehaviour : MonoBehaviour
     {
         gameObject.TryGetComponent<InitialPawnBooster>(out InitialPawnBooster gadget);
         if (!gadget)
-            gameObject.AddComponent<InitialPawnBooster>();
+        { gadget = gameObject.AddComponent<InitialPawnBooster>(); }
+        gadget.tutorialPanel = tutorialPanel;
     }
 }

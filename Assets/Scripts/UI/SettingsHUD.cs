@@ -120,8 +120,7 @@ public class SettingsHUD : MonoBehaviour
 
     public void ChangeTutorial()
     {
-        TutorialButtonsCheck();
-        // Debug.Log("method not yet implemented");
+        SettingsManager.OnTutorialChangeRequest?.Invoke();
     }
 
     public void ChangeSong()
@@ -185,6 +184,16 @@ public class SettingsHUD : MonoBehaviour
 
     private void TutorialButtonsCheck()
     {
-        // Debug.Log("method not yet implemented");
+        if (GamePlaySettings.showTutorial)
+        {
+            ShowTutorialBtn.interactable = false;
+            HideTutorialBtn.interactable = true;
+        }
+        if (!GamePlaySettings.showTutorial)
+        {
+            HideTutorialBtn.interactable = false;
+            ShowTutorialBtn.interactable = true;
+        }
+
     }
 }

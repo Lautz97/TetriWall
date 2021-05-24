@@ -4,6 +4,7 @@ public static class SaveLoadSettings
     public static string hiScoreKey { private set; get; } = "highestScore";
 
     public static string inputStyleBool { private set; get; } = "inputStyle";
+    public static string showTutorial { private set; get; } = "showTutorial";
 
     public static string masterVolumeFloat { private set; get; } = "masterVolume";
     public static string musicVolumeFloat { private set; get; } = "musicVolume";

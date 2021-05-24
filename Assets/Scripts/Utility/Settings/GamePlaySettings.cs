@@ -39,4 +39,9 @@ public static class GamePlaySettings
     public const int DEFAULT_initialClusterDimension = 20;
     public static int initialClusterDimension { private set; get; } = 20;
 
+
+    // tutorial
+    public const bool DEFAULT_showTutorial = true;
+    public static bool showTutorial = true;
+
 }

@@ -75,20 +75,23 @@ public class SettingsManager : MonoBehaviour
 
     private void RecallTutorial()
     {
-        // Debug.Log("method not yet implemented");
-        //OnTutorialChanged?.Invoke();
+        GamePlaySettings.showTutorial = SaveLoad.HasSetting(SaveLoadSettings.showTutorial) ? SaveLoad.LoadBoolSettingsManually(SaveLoadSettings.showTutorial) : GamePlaySettings.DEFAULT_showTutorial;
+        SaveLoad.SaveBoolSettingsManually(SaveLoadSettings.showTutorial, GamePlaySettings.showTutorial);
+        OnTutorialChanged?.Invoke();
     }
 
     private void ResetTutorial()
     {
-        // Debug.Log("method not yet implemented");
-        //OnTutorialChanged?.Invoke();
+        GamePlaySettings.showTutorial = GamePlaySettings.DEFAULT_showTutorial;
+        SaveLoad.SaveBoolSettingsManually(SaveLoadSettings.showTutorial, GamePlaySettings.showTutorial);
+        OnTutorialChanged?.Invoke();
     }
 
     private void ChangeTutorial()
     {
-        // Debug.Log("method not yet implemented");
-        //OnTutorialChanged?.Invoke();
+        GamePlaySettings.showTutorial = !GamePlaySettings.showTutorial;
+        SaveLoad.SaveBoolSettingsManually(SaveLoadSettings.showTutorial, GamePlaySettings.showTutorial);
+        OnTutorialChanged?.Invoke();
     }
 
     private void RecallSong()
