@@ -9,7 +9,7 @@
 
     public const float DEFAULT_InitialPitch = 1.0f;
     public static float InitialPitch = DEFAULT_InitialPitch;
-    public const float DEFAULT_InitialDeltaPitch = 0.00025f;
+    public const float DEFAULT_InitialDeltaPitch = 0.000125f;
     public static float InitialDeltaPitch = DEFAULT_InitialDeltaPitch;
 
     public static float CurrentPitch;
