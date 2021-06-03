@@ -6,7 +6,7 @@ public static class StateManager
 {
     public static State GetGameState { private set; get; }
 
-    public static Action OnMainMenu, OnInitialize, OnPause, OnResume, OnGameOver, OnReset, OnLoading;
+    public static Action OnMainMenu, OnInitialize, OnPause, OnResume, OnGameOver, OnReset, OnLoading, OnPlayAgain;
 
     public static void Loading()
     {
@@ -15,9 +15,20 @@ public static class StateManager
     }
     public static void MainMenu()
     {
-        Loading();
-        GetGameState = State.mainMenu;
-        OnMainMenu?.Invoke();
+        if (GetGameState == State.playAgain)
+        {
+            Loading();
+            GetGameState = State.mainMenu;
+            OnMainMenu?.Invoke();
+            OnPlayAgain?.Invoke();
+        }
+        else
+        {
+            Loading();
+            GetGameState = State.mainMenu;
+            OnMainMenu?.Invoke();
+        }
+
     }
     public static void Initialize()
     {
@@ -46,6 +57,14 @@ public static class StateManager
         //PROBLEM
         SceneManager.LoadScene("GameLevel", LoadSceneMode.Single);
     }
+    public static void PlayAgain()
+    {
+        GetGameState = State.resetting;
+        OnReset?.Invoke();
+        //PROBLEM
+        GetGameState = State.playAgain;
+        SceneManager.LoadScene("GameLevel", LoadSceneMode.Single);
+    }
     public static void Quit()
     {
         Application.Quit();
@@ -54,5 +73,5 @@ public static class StateManager
 }
 public enum State
 {
-    mainMenu, initializing, pausing, resuming, gameover, resetting, loading
+    mainMenu, initializing, pausing, resuming, gameover, resetting, loading, playAgain
 }

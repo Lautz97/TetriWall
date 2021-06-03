@@ -28,8 +28,8 @@ public class GameOverHUD : MonoBehaviour
 
     public void PlayAgain()
     {
-        print("GAME RESETTED BY GAME OVER HUD");
-        print("THIS DOES NOT WORK PROPERLY");
-        StateManager.Reset();
+        // print("GAME RESETTED BY GAME OVER HUD");
+        // print("THIS DOES NOT WORK PROPERLY");
+        StateManager.PlayAgain();
     }
 }

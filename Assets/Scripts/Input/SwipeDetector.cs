@@ -6,6 +6,7 @@ public class SwipeDetector : MonoBehaviour
     private bool testInput = false;
     private Vector2 downPosition, upPosition;
     private float downTime, upTime;
+    private bool filterInput;
     public static Action<SwipeData> OnSwipe;
 
     private void Awake()
@@ -15,6 +16,16 @@ public class SwipeDetector : MonoBehaviour
 #endif
     }
 
+    private void OnEnable()
+    {
+        TutorialHUD.OnTutorialStart += EnableInputFilter;
+        TutorialHUD.OnTutorialEnd += DisableInputFilter;
+    }
+    private void OnDisable()
+    {
+        TutorialHUD.OnTutorialStart -= EnableInputFilter;
+        TutorialHUD.OnTutorialEnd -= DisableInputFilter;
+    }
 
     private void Update()
     {
@@ -105,6 +116,15 @@ public class SwipeDetector : MonoBehaviour
         }
         SetPositionAndTime(downPosition, out upPosition, out upTime);
     }
+    private void EnableInputFilter()
+    {
+        filterInput = true;
+    }
+
+    private void DisableInputFilter()
+    {
+        filterInput = false;
+    }
 
     private void SendSwipe(Vector2 dir)
     {
@@ -114,7 +134,7 @@ public class SwipeDetector : MonoBehaviour
             StartPosition = downPosition,
             EndPosition = upPosition
         };
-        if (StateManager.GetGameState == State.resuming || StateManager.GetGameState == State.initializing)
+        if ((StateManager.GetGameState == State.resuming || StateManager.GetGameState == State.initializing) && !filterInput)
         {
             OnSwipe?.Invoke(swipe);
         }

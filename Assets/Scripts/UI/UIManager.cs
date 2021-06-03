@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
         StateManager.OnResume += ActivateGameLoop;
         StateManager.OnInitialize += ActivateGameLoop;
 
+        StateManager.OnPlayAgain += AutoStartGame;
+
         StateManager.MainMenu();
     }
     private void OnDisable()
@@ -22,6 +24,8 @@ public class UIManager : MonoBehaviour
         StateManager.OnPause -= AcivatePause;
         StateManager.OnResume -= ActivateGameLoop;
         StateManager.OnInitialize -= ActivateGameLoop;
+
+        StateManager.OnPlayAgain -= AutoStartGame;
     }
 
     private void DisableAllPanels()
@@ -57,6 +61,10 @@ public class UIManager : MonoBehaviour
         loadingPanel.SetActive(true);
     }
 
-
+    private void AutoStartGame()
+    {
+        AutoStartGame asg = menuPanel.AddComponent<AutoStartGame>();
+        asg.menuHUD = menuPanel.GetComponent<MainMenuHUD>();
+    }
 
 }
