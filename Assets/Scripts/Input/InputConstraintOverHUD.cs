@@ -25,13 +25,11 @@ public class InputConstraintOverHUD : MonoBehaviour
 
     private void AdmitInput()
     {
-        Debug.Log("si");
         GamePlaySettings.CanMove = true;
     }
 
     private void InterceptInput()
     {
-        Debug.Log("no");
         GamePlaySettings.CanMove = false;
     }
 

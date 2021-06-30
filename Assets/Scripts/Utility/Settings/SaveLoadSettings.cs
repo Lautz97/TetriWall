@@ -9,4 +9,7 @@ public static class SaveLoadSettings
     public static string masterVolumeFloat { private set; get; } = "masterVolume";
     public static string musicVolumeFloat { private set; get; } = "musicVolume";
     public static string effectsVolumeFloat { private set; get; } = "effectsVolume";
+    public static string vibrationBool { private set; get; } = "vibration";
+    public static string vibrationMovementBool { private set; get; } = "vibrationMovement";
+    public static string vibrationButtonsBool { private set; get; } = "vibrationButtons";
 }

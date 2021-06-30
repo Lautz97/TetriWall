@@ -6,10 +6,13 @@ public class PauseHUD : MonoBehaviour
 {
     [SerializeField] private GameObject InputMan;
 
-    [SerializeField] GameObject GameplayTab, AudioTab;
-    [SerializeField] GameObject OpenGameplayTabBtn, OpenAudioTabBtn;
+    [SerializeField] GameObject GameplayTab, AudioTab, VibrationTab;
+    [SerializeField] GameObject OpenGameplayTabBtn, OpenAudioTabBtn, OpenVibrationTabBtn;
 
     [SerializeField] Button ContinuousInputBtn, DiscreteInputBtn;
+    [SerializeField] Button VibrationOn, VibrationOff;
+    [SerializeField] Button VibrationButtonsOn, VibrationButtonsOff;
+    [SerializeField] Button VibrationMovementOn, VibrationMovementOff;
     [SerializeField] TMP_Text MasterVolumeText, MusicVolumeText, EffectsVolumeText;
     [SerializeField] Slider MasterVolumeSlider, MusicVolumeSlider, EffectsVolumeSlider;
 
@@ -19,9 +22,14 @@ public class PauseHUD : MonoBehaviour
         CloseTabs();
         InputButtonsCheck();
         VolumeSlidersCheck();
+        VibrationUICheck();
 
         SettingsManager.OnInputSettingsChanged += InputButtonsCheck;
         SettingsManager.OnVolumeChanged += VolumeSlidersCheck;
+
+        SettingsManager.OnVibrationChanged += VibrationUICheck;
+        SettingsManager.OnVibrationButtonsChanged += VibrationUICheck;
+        SettingsManager.OnVibrationMovementChanged += VibrationUICheck;
 
         SettingsManager.OnSettingsResetted += InputButtonsCheck;
         SettingsManager.OnSettingsResetted += VolumeSlidersCheck;
@@ -33,6 +41,10 @@ public class PauseHUD : MonoBehaviour
         SettingsManager.OnInputSettingsChanged -= InputButtonsCheck;
         SettingsManager.OnVolumeChanged -= VolumeSlidersCheck;
 
+        SettingsManager.OnVibrationChanged -= VibrationUICheck;
+        SettingsManager.OnVibrationButtonsChanged -= VibrationUICheck;
+        SettingsManager.OnVibrationMovementChanged -= VibrationUICheck;
+
         SettingsManager.OnSettingsResetted -= InputButtonsCheck;
         SettingsManager.OnSettingsResetted -= VolumeSlidersCheck;
     }
@@ -41,8 +53,6 @@ public class PauseHUD : MonoBehaviour
     public void ResumeGame()
     {
         StateManager.Resume();
-        //hack
-        // GamePlaySettings.CanMove = true;
     }
 
     public void QuitToMenu()
@@ -102,6 +112,19 @@ public class PauseHUD : MonoBehaviour
             OpenGameplayTabBtn.SetActive(true);
         }
     }
+    public void ToggleVibrationTab()
+    {
+        if (OpenVibrationTabBtn.activeInHierarchy)
+        {
+            OpenVibrationTabBtn.SetActive(false);
+            VibrationTab.SetActive(true);
+        }
+        else
+        {
+            VibrationTab.SetActive(false);
+            OpenVibrationTabBtn.SetActive(true);
+        }
+    }
 
     public void ChangeInputSystem()
     {
@@ -117,6 +140,19 @@ public class PauseHUD : MonoBehaviour
             AudioSettings.CurrentEffectsVolume = EffectsVolumeSlider.value;
             SettingsManager.OnVolumeChangeRequest?.Invoke();
         }
+    }
+
+    public void ChangeVibration()
+    {
+        SettingsManager.OnVibrationChangeRequest?.Invoke();
+    }
+    public void ChangeVibrationMovement()
+    {
+        SettingsManager.OnVibrationMovementChangeRequest?.Invoke();
+    }
+    public void ChangeVibrationButtons()
+    {
+        SettingsManager.OnVibrationButtonsChangeRequest?.Invoke();
     }
 
     private void InputButtonsCheck()
@@ -147,6 +183,18 @@ public class PauseHUD : MonoBehaviour
         EffectsVolumeText.text = "Effects Volume: " + Mathf.RoundToInt(AudioSettings.CurrentEffectsVolume * 100);
 
         protectedChange = false;
+    }
+
+    private void VibrationUICheck()
+    {
+        VibrationOn.interactable = !GamePlaySettings.vibration;
+        VibrationOff.interactable = GamePlaySettings.vibration;
+
+        VibrationButtonsOn.interactable = !GamePlaySettings.vibrationButtons;
+        VibrationButtonsOff.interactable = GamePlaySettings.vibrationButtons;
+
+        VibrationMovementOn.interactable = !GamePlaySettings.vibrationMovement;
+        VibrationMovementOff.interactable = GamePlaySettings.vibrationMovement;
     }
 
     public void ResetSettings()

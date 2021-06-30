@@ -46,4 +46,13 @@ public static class GamePlaySettings
     public const bool DEFAULT_showTutorial = true;
     public static bool showTutorial = true;
 
+    // vibration
+    public const bool DEFAULT_vibration = true;
+    public static bool vibration = true;
+    public const bool DEFAULT_vibrationMovement = true;
+    public static bool vibrationMovement = true;
+    public const bool DEFAULT_vibrationButtons = true;
+    public static bool vibrationButtons = true;
+
+
 }

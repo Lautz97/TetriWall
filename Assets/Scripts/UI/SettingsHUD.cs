@@ -14,8 +14,12 @@ public class SettingsHUD : MonoBehaviour
     [SerializeField] TMP_Text MasterVolumeText, MusicVolumeText, EffectsVolumeText;
     [SerializeField] Slider MasterVolumeSlider, MusicVolumeSlider, EffectsVolumeSlider;
     [SerializeField] Button ShowTutorialBtn, HideTutorialBtn;
-    [SerializeField] GameObject GameplayTab, AudioTab;
-    [SerializeField] GameObject OpenGameplayTabBtn, OpenAudioTabBtn;
+    [SerializeField] GameObject GameplayTab, AudioTab, VibrationTab;
+    [SerializeField] GameObject OpenGameplayTabBtn, OpenAudioTabBtn, OpenVibrationTabBtn;
+
+    [SerializeField] Button VibrationOn, VibrationOff;
+    [SerializeField] Button VibrationButtonsOn, VibrationButtonsOff;
+    [SerializeField] Button VibrationMovementOn, VibrationMovementOff;
 
     private void Start()
     {
@@ -39,6 +43,10 @@ public class SettingsHUD : MonoBehaviour
         SettingsManager.OnVolumeChanged += VolumeSlidersCheck;
         SettingsManager.OnTutorialChanged += TutorialButtonsCheck;
         SettingsManager.OnSongChanged += SongButtonsCheck;
+
+        SettingsManager.OnVibrationChanged += VibrationUICheck;
+        SettingsManager.OnVibrationButtonsChanged += VibrationUICheck;
+        SettingsManager.OnVibrationMovementChanged += VibrationUICheck;
     }
 
     private void OnDisable()
@@ -48,6 +56,10 @@ public class SettingsHUD : MonoBehaviour
         SettingsManager.OnVolumeChanged -= VolumeSlidersCheck;
         SettingsManager.OnTutorialChanged -= TutorialButtonsCheck;
         SettingsManager.OnSongChanged -= SongButtonsCheck;
+
+        SettingsManager.OnVibrationChanged -= VibrationUICheck;
+        SettingsManager.OnVibrationButtonsChanged -= VibrationUICheck;
+        SettingsManager.OnVibrationMovementChanged -= VibrationUICheck;
     }
 
     private void CloseTabs()
@@ -85,6 +97,19 @@ public class SettingsHUD : MonoBehaviour
             OpenGameplayTabBtn.SetActive(true);
         }
     }
+    public void ToggleVibrationTab()
+    {
+        if (OpenVibrationTabBtn.activeInHierarchy)
+        {
+            OpenVibrationTabBtn.SetActive(false);
+            VibrationTab.SetActive(true);
+        }
+        else
+        {
+            VibrationTab.SetActive(false);
+            OpenVibrationTabBtn.SetActive(true);
+        }
+    }
 
     public void QuitGame()
     {
@@ -105,6 +130,19 @@ public class SettingsHUD : MonoBehaviour
     public void ChangeInputSystem()
     {
         SettingsManager.OnInputSettingsChangeRequest?.Invoke();
+    }
+
+    public void ChangeVibration()
+    {
+        SettingsManager.OnVibrationChangeRequest?.Invoke();
+    }
+    public void ChangeVibrationMovement()
+    {
+        SettingsManager.OnVibrationMovementChangeRequest?.Invoke();
+    }
+    public void ChangeVibrationButtons()
+    {
+        SettingsManager.OnVibrationButtonsChangeRequest?.Invoke();
     }
 
     public void ChangeVolume()
@@ -140,6 +178,24 @@ public class SettingsHUD : MonoBehaviour
 
         SongButtonsCheck();
         TutorialButtonsCheck();
+
+        VibrationUICheck();
+    }
+
+    private void VibrationUICheck()
+    {
+        protectedChange = true;
+
+        VibrationOn.interactable = !GamePlaySettings.vibration;
+        VibrationOff.interactable = GamePlaySettings.vibration;
+
+        VibrationButtonsOn.interactable = !GamePlaySettings.vibrationButtons;
+        VibrationButtonsOff.interactable = GamePlaySettings.vibrationButtons;
+
+        VibrationMovementOn.interactable = !GamePlaySettings.vibrationMovement;
+        VibrationMovementOff.interactable = GamePlaySettings.vibrationMovement;
+
+        protectedChange = true;
     }
 
     private void InputButtonsCheck()

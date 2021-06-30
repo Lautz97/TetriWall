@@ -32,26 +32,41 @@ public class HapticFeedback : MonoBehaviour
 
     private void VibratePassed()
     {
-        Vibration.Vibrate(100);
+        if (GamePlaySettings.vibration)
+        {
+            Vibration.Vibrate(100);
+        }
     }
     private void VibrateCollided()
     {
-        Vibration.Vibrate(300);
+        if (GamePlaySettings.vibration)
+        {
+            Vibration.Vibrate(300);
+        }
+    }
+    private void VibrateLevel()
+    {
+        if (GamePlaySettings.vibration)
+        {
+            Vibration.Vibrate(200);
+        }
     }
 
     private void VibrateInput()
     {
-        Vibration.Vibrate(15);
+        if (GamePlaySettings.vibrationMovement)
+        {
+            Vibration.Vibrate(15);
+        }
     }
 
     private void VibrateButtons()
     {
-        Vibration.Vibrate(50);
+        if (GamePlaySettings.vibrationButtons)
+        {
+            Vibration.Vibrate(50);
+        }
     }
 
-    private void VibrateLevel()
-    {
-        Vibration.Vibrate(200);
-    }
 
 }

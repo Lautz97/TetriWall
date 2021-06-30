@@ -8,7 +8,10 @@ public class SettingsManager : MonoBehaviour
                         OnSettingsResetRequest, OnSettingsResetted,
                         OnSongChangeRequest, OnSongChanged,
                         OnVolumeChangeRequest, OnVolumeChanged,
-                        OnTutorialChangeRequest, OnTutorialChanged;
+                        OnTutorialChangeRequest, OnTutorialChanged,
+                        OnVibrationChangeRequest, OnVibrationChanged,
+                        OnVibrationMovementChangeRequest, OnVibrationMovementChanged,
+                        OnVibrationButtonsChangeRequest, OnVibrationButtonsChanged;
     private void OnEnable()
     {
         RecallSaved();
@@ -22,6 +25,10 @@ public class SettingsManager : MonoBehaviour
 
         OnSongChangeRequest += SongChanged;
         OnVolumeChangeRequest += VolumeChanged;
+
+        OnVibrationChangeRequest += ChangeVibration;
+        OnVibrationMovementChangeRequest += ChangeVibrationMovement;
+        OnVibrationButtonsChangeRequest += ChangeVibrationButtons;
     }
 
     private void OnDisable()
@@ -35,6 +42,10 @@ public class SettingsManager : MonoBehaviour
 
         OnSongChangeRequest -= SongChanged;
         OnVolumeChangeRequest -= VolumeChanged;
+
+        OnVibrationChangeRequest -= ChangeVibration;
+        OnVibrationMovementChangeRequest -= ChangeVibrationMovement;
+        OnVibrationButtonsChangeRequest -= ChangeVibrationButtons;
     }
 
     private void RecallSaved()
@@ -53,6 +64,9 @@ public class SettingsManager : MonoBehaviour
 
         // tutorial
         RecallTutorial();
+
+        // vibration
+        RecallVibration();
     }
 
     private void ResetSettings()
@@ -71,6 +85,75 @@ public class SettingsManager : MonoBehaviour
 
         // tutorial
         ResetTutorial();
+
+        // vibration
+        ResetVibration();
+    }
+
+    private void RecallVibration()
+    {
+        GamePlaySettings.vibration = SaveLoad.HasSetting(SaveLoadSettings.vibrationBool) ? SaveLoad.LoadBoolSettingsManually(SaveLoadSettings.vibrationBool) : GamePlaySettings.DEFAULT_vibration;
+        SaveLoad.SaveBoolSettingsManually(SaveLoadSettings.vibrationBool, GamePlaySettings.vibration);
+        OnVibrationChanged?.Invoke();
+
+        GamePlaySettings.vibrationButtons = SaveLoad.HasSetting(SaveLoadSettings.vibrationButtonsBool) ? SaveLoad.LoadBoolSettingsManually(SaveLoadSettings.vibrationButtonsBool) : GamePlaySettings.DEFAULT_vibrationButtons;
+        SaveLoad.SaveBoolSettingsManually(SaveLoadSettings.vibrationButtonsBool, GamePlaySettings.vibrationButtons);
+        OnVibrationButtonsChanged?.Invoke();
+
+        GamePlaySettings.vibrationMovement = SaveLoad.HasSetting(SaveLoadSettings.vibrationMovementBool) ? SaveLoad.LoadBoolSettingsManually(SaveLoadSettings.vibrationMovementBool) : GamePlaySettings.DEFAULT_vibrationMovement;
+        SaveLoad.SaveBoolSettingsManually(SaveLoadSettings.vibrationMovementBool, GamePlaySettings.vibrationMovement);
+        OnVibrationMovementChanged?.Invoke();
+    }
+
+    private void ResetVibration()
+    {
+        GamePlaySettings.vibration = GamePlaySettings.DEFAULT_vibration;
+        SaveLoad.SaveBoolSettingsManually(SaveLoadSettings.vibrationBool, GamePlaySettings.vibration);
+        OnVibrationChanged?.Invoke();
+
+        GamePlaySettings.vibrationMovement = GamePlaySettings.DEFAULT_vibrationMovement;
+        SaveLoad.SaveBoolSettingsManually(SaveLoadSettings.vibrationMovementBool, GamePlaySettings.vibrationMovement);
+        OnVibrationMovementChanged?.Invoke();
+
+        GamePlaySettings.vibrationButtons = GamePlaySettings.DEFAULT_vibrationButtons;
+        SaveLoad.SaveBoolSettingsManually(SaveLoadSettings.vibrationButtonsBool, GamePlaySettings.vibrationButtons);
+        OnVibrationButtonsChanged?.Invoke();
+    }
+
+    private void ChangeVibrationMovement()
+    {
+        if ((GamePlaySettings.vibration == false && GamePlaySettings.vibrationMovement == true) || GamePlaySettings.vibration == true)
+        {
+            GamePlaySettings.vibrationMovement = !GamePlaySettings.vibrationMovement;
+            SaveLoad.SaveBoolSettingsManually(SaveLoadSettings.vibrationMovementBool, GamePlaySettings.vibrationMovement);
+            OnVibrationMovementChanged?.Invoke();
+        }
+    }
+    private void ChangeVibrationButtons()
+    {
+        if ((GamePlaySettings.vibration == false && GamePlaySettings.vibrationButtons == true) || GamePlaySettings.vibration == true)
+        {
+            GamePlaySettings.vibrationButtons = !GamePlaySettings.vibrationButtons;
+            SaveLoad.SaveBoolSettingsManually(SaveLoadSettings.vibrationButtonsBool, GamePlaySettings.vibrationButtons);
+            OnVibrationButtonsChanged?.Invoke();
+        }
+    }
+    private void ChangeVibration()
+    {
+        GamePlaySettings.vibration = !GamePlaySettings.vibration;
+        SaveLoad.SaveBoolSettingsManually(SaveLoadSettings.vibrationBool, GamePlaySettings.vibration);
+        OnVibrationChanged?.Invoke();
+        if (GamePlaySettings.vibration == false)
+        {
+            if (GamePlaySettings.vibrationMovement == true)
+            {
+                ChangeVibrationMovement();
+            }
+            if (GamePlaySettings.vibrationButtons == true)
+            {
+                ChangeVibrationButtons();
+            }
+        }
     }
 
     private void RecallTutorial()
