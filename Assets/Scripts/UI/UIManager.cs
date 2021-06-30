@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject menuPanel, pausePanel, loadingPanel, gameloopPanel, gameoverPanel;
+    [SerializeField] private Transform[] ignorable;
     private void OnEnable()
     {
         StateManager.OnLoading += ActivateLoading;
@@ -33,6 +35,10 @@ public class UIManager : MonoBehaviour
         foreach (Transform item in transform)
         {
             item.gameObject.SetActive(false);
+        }
+        foreach (Transform a in ignorable)
+        {
+            a.gameObject.SetActive(true);
         }
     }
     private void ActivateMainMenu()
