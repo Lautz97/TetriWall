@@ -1,6 +1,8 @@
 public static class GamePlaySettings
 {
     // movement
+
+    public static bool CanMove = false;
     public const bool DEFAULT_onlyHorizontal = true;
     public static bool onlyHorizontal = true;
     //distance from chunks
