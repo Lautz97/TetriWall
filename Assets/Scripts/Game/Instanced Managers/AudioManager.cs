@@ -7,11 +7,11 @@ public class AudioManager : MonoBehaviour
     string _musicVolume = "MusicVolume", _effectsVolume = "EffectsVolume", _masterVolume = "MasterVolume", _musicPitch = "MusicPitch";
     [SerializeField]
     AudioSource musicSource, menuSource, pauseSource, gameOverSource,
-                                btnSource, inputSource, wallSource;
+                                btnSource, inputSource, wallSource, levelSource;
     [SerializeField] AudioMixer masterMixer;/*MusicMixer, EffectsMixer, */
     private float _multiplier = 30f;
 
-    [SerializeField] AudioClip buttonClip = null, swipeClip = null, tapClip = null, wallPassedClip = null, wallCollidedClip = null;
+    [SerializeField] AudioClip buttonClip = null, swipeClip = null, tapClip = null, wallPassedClip = null, wallCollidedClip = null, nextLevelClip = null;
     [SerializeField] AudioClip bgmClip = null, menuClip = null, gameOverClip = null, pauseClip = null;
 
 
@@ -149,6 +149,7 @@ public class AudioManager : MonoBehaviour
         {
             btnSource.PlayOneShot(fx);
         }
+        HapticFeedback.OnButtonPressed?.Invoke();
     }
 
     private void InputPressed(SwipeData v)
@@ -157,10 +158,12 @@ public class AudioManager : MonoBehaviour
         if (v1 == Vector2.zero)
         {
             inputSource.PlayOneShot(tapClip);
+            HapticFeedback.OnTap?.Invoke();
         }
         else
         {
             inputSource.PlayOneShot(swipeClip);
+            HapticFeedback.OnSwipe?.Invoke();
         }
     }
 
@@ -174,6 +177,7 @@ public class AudioManager : MonoBehaviour
         masterMixer.GetFloat(_musicPitch, out float p);
         AudioSettings.CurrentPitch = (AudioSettings.CurrentPitch + AudioSettings.CurrentDeltaPitch);
         masterMixer.SetFloat(_musicPitch, p * AudioSettings.CurrentPitch);
+        HapticFeedback.OnWallPassed?.Invoke();
     }
 
     private void WallCollided()
@@ -184,6 +188,7 @@ public class AudioManager : MonoBehaviour
             wallSource.PlayOneShot(fx);
         }
         masterMixer.SetFloat(_musicPitch, AudioSettings.InitialPitch);
+        HapticFeedback.OnWallCollided?.Invoke();
     }
 
     private void NextLevel(int l)
@@ -193,6 +198,12 @@ public class AudioManager : MonoBehaviour
         {
             AudioSettings.CurrentDeltaPitch = 0;
         }
+        AudioClip fx = nextLevelClip;
+        if (fx != null)
+        {
+            levelSource.PlayOneShot(fx);
+        }
+        HapticFeedback.OnLevelChange?.Invoke();
     }
 
 }

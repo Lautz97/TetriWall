@@ -1,32 +1,23 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class InputConstraintOverHUD : MonoBehaviour
 {
-
+    public static Action OnFilterNeeded, OnFilterRemoved;
     private void OnEnable()
     {
-        StateManager.OnLoading += InterceptInput;
-        StateManager.OnGameOver += InterceptInput;
-        StateManager.OnMainMenu += InterceptInput;
-        StateManager.OnPause += InterceptInput;
-
-        StateManager.OnResume += AdmitInput;
-        StateManager.OnInitialize += AdmitInput;
+        OnFilterNeeded += InterceptInput;
+        OnFilterRemoved += AdmitInput;
 
         TutorialHUD.OnTutorialStart += InterceptInput;
         TutorialHUD.OnTutorialEnd += AdmitInput;
     }
     private void OnDisable()
     {
-        StateManager.OnLoading -= InterceptInput;
-        StateManager.OnGameOver -= InterceptInput;
-        StateManager.OnMainMenu -= InterceptInput;
-        StateManager.OnPause -= InterceptInput;
-
-        StateManager.OnResume -= AdmitInput;
-        StateManager.OnInitialize -= AdmitInput;
+        OnFilterNeeded -= InterceptInput;
+        OnFilterRemoved -= AdmitInput;
 
         TutorialHUD.OnTutorialStart -= InterceptInput;
         TutorialHUD.OnTutorialEnd -= AdmitInput;
@@ -34,11 +25,13 @@ public class InputConstraintOverHUD : MonoBehaviour
 
     private void AdmitInput()
     {
+        Debug.Log("si");
         GamePlaySettings.CanMove = true;
     }
 
     private void InterceptInput()
     {
+        Debug.Log("no");
         GamePlaySettings.CanMove = false;
     }
 

@@ -45,26 +45,31 @@ public class UIManager : MonoBehaviour
     {
         DisableAllPanels();
         menuPanel.SetActive(true);
+        InputConstraintOverHUD.OnFilterNeeded?.Invoke();
     }
     private void AcivatePause()
     {
         DisableAllPanels();
         pausePanel.SetActive(true);
+        InputConstraintOverHUD.OnFilterNeeded?.Invoke();
     }
     private void ActivateGameLoop()
     {
         DisableAllPanels();
         gameloopPanel.SetActive(true);
+        InputConstraintOverHUD.OnFilterRemoved?.Invoke();
     }
     private void ActivateGameOver()
     {
         DisableAllPanels();
         gameoverPanel.SetActive(true);
+        InputConstraintOverHUD.OnFilterNeeded?.Invoke();
     }
     private void ActivateLoading()
     {
         DisableAllPanels();
         loadingPanel.SetActive(true);
+        InputConstraintOverHUD.OnFilterNeeded?.Invoke();
     }
 
     private void AutoStartGame()

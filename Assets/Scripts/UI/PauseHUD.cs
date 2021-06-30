@@ -41,6 +41,8 @@ public class PauseHUD : MonoBehaviour
     public void ResumeGame()
     {
         StateManager.Resume();
+        //hack
+        // GamePlaySettings.CanMove = true;
     }
 
     public void QuitToMenu()

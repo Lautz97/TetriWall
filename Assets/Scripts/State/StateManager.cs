@@ -67,6 +67,7 @@ public static class StateManager
     }
     public static void Quit()
     {
+        OnReset?.Invoke();
         Application.Quit();
     }
 
