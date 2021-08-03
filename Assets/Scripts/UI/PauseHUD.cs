@@ -112,6 +112,7 @@ public class PauseHUD : MonoBehaviour
             OpenGameplayTabBtn.SetActive(true);
         }
     }
+
     public void ToggleVibrationTab()
     {
         if (OpenVibrationTabBtn.activeInHierarchy)
